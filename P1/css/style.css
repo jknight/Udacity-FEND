@@ -10,6 +10,10 @@ div.logo {
     margin-top:10px;
 }
 
+img.main-image {
+    width:100%;
+}
+
 div.featured_work {
     margin-top:10px;
 }
