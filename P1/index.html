@@ -23,86 +23,86 @@
   </head>
   <body>
 
-    <main>
-        <div class="container" style="margin-top:20px;">
-    
-        <header>
+        <!-- 
+        TODO: consider using <main> tag (why?) 
+        TODO: what is Less ? learn more about it ...
+        TODO: using the 'img-responsive' class does work when I look it resized to mobile using developer tools.
+               But I feel like there's more to the responsive story, and I need to learn about media queries 
+        -->
+
+        <div class="container">
+
+        <header> <!-- NOTE to self: HTML5 semantic tag --> 
         <div class="row">
             <div class="col-md-2">&nbsp;</div>
-            <div class="col-md-1" style="font:100px Symbol">k</div>
+            <div class="col-md-1"><img alt="logo" srcset="images/logo.png"/></div>
             <div class="col-md-5">&nbsp;</div>
             <div class="col-md-4">
                 <h1>Jeffrey Knight</h1>
                 <h2>Projects</h2>
             </div>
         </div>
+        <header>
 
         <div class="row">
             <div class="col-md-2"></div>
             <div class="col-md-10"><hr class="header-bottom-line"/></div>
         </div>
-        </header>
     
         <div class="row">
             <section>
-                <div class="col-md-2">
-                    <div class="color-swath" style="background-color:#74a8e1;">#74a8e1</div>
-                    <div class="color-swath" style="background-color:#b1c5dd;">#b1c5dd</div>
-                    <div class="color-swath" style="background-color:#91a5c6;">#91a5c6</div>
-                    <div class="color-swath" style="background-color:#4d6a92;">#4d6a92</div>
-                    <div class="color-swath" style="background-color:#444861;">#444861</div>
-                </div>
-            </section>
-        
-            <section>
-                <div class="col-md-10">
-                    <div class="row" style="margin-top:10px;">
-                        <div class="col-md-12"> 
-                            <img src="images/main-image.jpg" style="overflow:hidden;width:945px;">                        
-                        </div>
-                    </div>
-                    
-                    <div class="row" style="margin-top:20px;">
-                        <div class="col-md-12">
-                            <h3 class="subheader">Featured Work</h3>
-                        <div>
-                    </div>
-                    
-                    <div class="row" style="margin-bottom:10px;">
-                        <div class="col-md-4">
-                            <img src="images/projects-1.jpg" />
-                            <h4>Castle Building</h4>
-                            Bespoke castles designed and built with locally sourced labor and materials.
-                        </div>
-        
-                        <div class="col-md-4">
-                            <img src="images/projects-2.jpg" />
-                            <h4>Treehouses Design and Construction</h4>
-                            Treehouses designed and built to specification.  
-                        </div>
-        
-                        <div class="col-md-4"> 
-                            <img src="images/projects-3.jpg" />
-                            <h4>Insect Taming</h4>
-                            Full service insect taming and training. All species handled.
-                        </div>
-                    </div>
-                </div>
+            <!-- TODO: I'm not entirely happpy how the nav bar renders on mobile devices -->
+            <div class="col-md-2">
+                <div class="color-swatch swatch1">#74a8e1</div>
+                <div class="color-swatch swatch2">#b1c5dd</div>
+                <div class="color-swatch swatch3">#91a5c6</div>
+                <div class="color-swatch swatch4">#4d6a92</div>
+                <div class="color-swatch swatch5">#444861</div>
+            </div>
             </section>
     
+            <section> 
+            <div class="col-md-10">
+                <div class="row logo">
+                    <div class="col-md-12"> 
+                        <img alt="Main image" src="images/main-image.jpg"  class="img-responsive"/>
+                    </div>
+                </div>
+                <div class="row featured_work">
+                    <div class="col-md-12">
+                        <h3 class="subheader">Featured Work</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <img alt="Project 1" src="images/projects-1.jpg" />
+                        <h4>Castle Building</h4>
+                        Bespoke castles designed and built with locally sourced labor and materials.
+                    </div>
+                    <div class="col-md-4">
+                        <img alt="Project 2" src="images/projects-2.jpg" />
+                        <h4>Treehouses Design and Construction</h4>
+                        Treehouses designed and built to specification.  
+                    </div>
+                    <div class="col-md-4"> 
+                        <img alt="Project 3" src="images/projects-3.jpg" />
+                        <h4>Insect Taming</h4>
+                        Full service insect taming and training. All species handled.
+                    </div>
+                </div>
+            </div>
+            </section>
         </div>
 
        <footer>
-       <div class="row">
+       <div class="row footer">
             <div class="col-md-12">
             <!-- nothing here yet ... -->
             </div>
         </div>
-       </footer>
+        </footer>
+
       </div>
-
-    </main>
-
 
   </body>
 </html>
