@@ -6,19 +6,27 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
   <title>Jeffrey Knight :: Project Portfolio</title>
 
-  <script>
-    // Picture element HTML5 shiv (picturefill)
-    document.createElement( "picture" );
-  </script>
-
-  <!-- Libraries (css / js) -->
+  <!-- TODO: need to learn more about npm, grunt, and project organization so I can 
+       put these dependencies under a simple 'js' folder -->
+  <script src="node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
   <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.rawgit.com/scottjehl/picturefill/3.0/dist/picturefill.min.js" async></script>
-
   <link href="css/style.css" rel="stylesheet">
 
+  <script type="text/javascript">
+     //using modals for demonstration purposes, but repurposing content to keep this code as short as possible
+     $(function() {
+        //wire up showing modal when clicking on projects
+        $('.project').click(function(e){
+          $('.modal-body').html(e.target.parentElement.innerHTML);
+          $('#myModal').modal('show');
+        });
+     });
+  </script>
+  
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -27,21 +35,33 @@
     <![endif]-->
 </head>
 <body>
+
   <!--
-        TODO: consider using <main> tag (why?)
-        TODO: what is Less ? learn more about it ...
-        TODO: using the 'img-responsive' class does work when I look it resized to mobile using developer tools.
-               But I feel like there's more to the responsive story, and I need to learn about media queries
-        NOTE: I tested the heck out of srcset and can't get it to actively choose different images based on different screen sizes.
-              I did a lot of cache clearing, viewing in responsive mode w/ dev tools, testing on my iphone and no luck. Test case:
-                http://codepen.io/anon/pen/OyLBGp?editors=100 //always green ?
-        -->
+  TODO: consider using <main> tag (why?)
+  TODO: what is Less ? learn more about it ...
+  TODO: srcset doesn't work as smoothly as I'd like. Continue testing ( http://codepen.io/anon/pen/OyLBGp?editors=100 )
+  -->
+
+  <!-- Modal placeholder div for clicks on projects (not visible on load) -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">x</span>
+          </button>
+        </div>
+        <div class="modal-body"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main content -->
   <div class="container">
     <header>
-      <!-- NOTE to self: HTML5 semantic tag -->
       <div class="row">
         <div class="col-md-1 col-md-offset-2">
-          <img alt="logo" src="[smallest]" srcset="images/logo.png" class="img-responsive">
+          <img alt="logo" src="images/logo.svg" class="img-responsive">
         </div>
         <div class="col-md-4 col-md-offset-5">
           <h1>Jeffrey Knight</h1>
@@ -79,33 +99,35 @@
         <div class="col-md-10">
           <div class="row logo">
             <div class="col-md-12">
-                <img alt="Main image" 
-                        srcset="images/main-large.jpg 989w,
-                                images/main-medium.jpg 640w,
-                                images/main-small.jpg 320w"
-                        src="images/main-small.jpg"
-                        class="img-responsive" />
-            </div>
+              <img alt="Main image" srcset="images/main-lg.jpg 989w, images/main-md.jpg 640w, images/main-sm.jpg 320w" 
+                src="images/main-md.jpg" class="img-responsive">
+              </div>
           </div>
           <div class="row featured_work">
             <div class="col-md-12">
               <h3 class="subheader">Featured Work</h3>
             </div>
-          </div>
+          </div><!-- at the moment, these images are quite small already, so I'm just providing two srcset sizes -->
           <div class="row">
-            <div class="col-md-4">
-              <img alt="Project 1" src="[smallest]" srcset="images/projects-1.jpg" class="img-responsive"/>
-              <h4>Castle Building</h4>Bespoke castles designed and built with locally sourced labor and materials.
+            <div class="col-md-4 project">
+              <img alt="Project 1" srcset="images/projects-1-lg.jpg 500w, images/project-1-sm.jpg 100w" 
+                src="images/projects-1-lg.jpg" class="img-responsive">
+              <h4>Castle Building</h4>
+              Bespoke castles designed and built with locally sourced labor and materials.
             </div>
-            <div class="col-md-4">
-              <img alt="Project 2" src="[smallest]" srcset="images/projects-2.jpg" class="img-responsive">
-              <h4>Treehouses Design and Construction</h4>Treehouses designed and built to specification.
+            <div class="col-md-4 project">
+              <img alt="Project 2" srcset="images/projects-2-lg.jpg 500w, images/projects-2.sm.jpg 100w" 
+                src="images/projects-2-lg.jpg" class="img-responsive">
+              <h4>Treehouses Design and Construction</h4>
+              Treehouses designed and built to specification.
             </div>
-            <div class="col-md-4">
-              <img alt="Project 3" src="[smallest]" srcset="images/projects-3.jpg" class="img-responsive">
-              <h4>Insect Taming</h4>Full service insect taming and training. All species handled.
+            <div class="col-md-4 project">
+              <img alt="Project 3" srcset="images/projects-3-lg.jpg 500w, images/projects-3.sm.jpg 100w" 
+                src="images/projects-3-lg.jpg" class="img-responsive">
+              <h4>Insect Taming</h4>
+              Full service insect taming and training. All species handled.
             </div>
-         </div>
+          </div>
         </div>
       </section>
     </div>
