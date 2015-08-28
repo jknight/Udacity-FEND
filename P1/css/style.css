@@ -1,66 +1,67 @@
-div.container { 
+.container { 
     /* TODO: adding to bootstraps's container class. Not sure if I should do this
         or if it's better to define a new class. It's purely to add a margin to the top ...
         Could also do it with an additional div? */ 
-    margin-top:20px;
+    margin-top: 20px;
 }
 
-div.logo {
+.logo {
     /* TODO: again here it seems excessive to define a css class just to specify a margin top ? */
-    margin-top:10px;
+    margin-top: 10px;
 }
 
 img.main-image {
-    width:100%;
+    width: 100%;
 }
 
 div.featured_work {
-    margin-top:10px;
+    margin-top: 10px;
 }
 
 hr.header-bottom-line {
-    padding:0px;
-    margin:0px;
-    height:3px;
-    background-color:#444861;
+    padding: 0px;
+    margin: 0px;
+    height: 3px;
+    background-color: #444861;
 }
 
 div.color-swatch {
-    height:75px;
-    width:75px;
-    margin:10px;
-    color:white; 
-    padding:5px;
+    height: 75px;
+    width: 75px;
+    margin: 10px;
+    color: white; 
+    padding: 5px;
 }
 
-div.swatch1 { background-color:#74a8e1; }
-div.swatch2 { background-color:#91a5c6; }
-div.swatch3 { background-color:#4d6a92; }
-div.swatch4 { background-color:#444861; }
+/* Specify colors for the swatches here */
+div.swatch1 { background-color: #74a8e1; }
+div.swatch2 { background-color: #91a5c6; }
+div.swatch3 { background-color: #4d6a92; }
+div.swatch4 { background-color: #444861; }
 
 
 h1 {
-    text-transform:uppercase;
-    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-weight:normal;
+    text-transform: uppercase;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: normal;
     color: #4d6a92;
-    text-align:right;
+    text-align: right;
 }
 
 h2 {
-    text-transform:uppercase;
-    font-weight:normal;
-    color:#444861;
-    font-size:14pt;
-    text-align:right;
-    margin:0px;
+    text-transform: uppercase;
+    font-weight: normal;
+    color: #444861;
+    font-size: 14pt;
+    text-align: right;
+    margin: 0px;
 }
 
 h3 {
-    color:#b1c5dd;
+    color: #b1c5dd;
 }
 
 div.footer {
-    margin-top:10px;
-    height:50px;
+    margin-top: 10px;
+    height: 50px;
 }
