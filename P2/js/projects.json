@@ -1,0 +1,23 @@
+{
+    "projects": [
+        {
+            "title": "Chakra Healing",
+            "dates": "2020/01/01 - 2021/01-01",
+            "description": " Chakras are Entry Gates of the Aura.\nWithin the physical body resides a body double, a spiritual body, that contains the Chakras. The word Chakra in Sanscrit translates to wheel or disc.",
+            "images": [
+                "images/project1-image1.jpg",
+                "images/project1-image2.jpg"
+            ]
+        },
+        {
+            "title": "Nature. Water. Love",
+            "dates": "2020/01/01 - 2021/01-01",
+            "description": "They absorb and transmit energies to and from the universe, nature, celestial entities, from people even from things. ",
+            "images": [
+                "images/project1-image2.jpg",
+                "images/project1-image1.jpg"
+            ]
+        }
+    ],
+    "display": "function() { return \"function taking no parameters\"; }"
+}

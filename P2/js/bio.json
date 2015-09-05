@@ -1,0 +1,21 @@
+{
+  "name": "Jeffrey Knight",
+  "role": "Chant Leader",
+  "contact": 
+  {
+    "mobile": "(814) 143-1234",
+    "email": "bob@home.com",
+    "github": "www.www.com",
+    "twitter": "@om",
+    "location": "earth"
+  }
+  ,
+  "welcomeMessage": "Namaste",
+  "skills": [
+    "bird watching",
+    "rain gathering",
+    "chanting"
+  ],
+  "biopic": "http://www.damenationblog.com/wp-content/uploads/2012/10/iStock_000016048703Small.jpg",
+  "display": "function() { return \"function taking no parameters\"; }"
+}

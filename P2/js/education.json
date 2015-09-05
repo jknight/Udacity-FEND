@@ -1,0 +1,41 @@
+{
+    "schools": [
+        {
+            "name": "University of Ever Lasting Life",
+            "location": "Sedona, AZ",
+            "degree": "Bachelors of Crystal Divination",
+            "majors": [
+                "Crystal Idenfication",
+                "Gemology"
+            ],
+            "dates": "2020",
+            "url": "http://www.sedona.k12.az.us/"
+        },
+        {
+            "name": "Ark Covenent School of the South",
+            "location": "Machu Picho, Chile",
+            "degree": "Master of Chacra Interpretation",
+            "majors": [
+                "Color Theory",
+                "Energy Reading"
+            ],
+            "dates": "2050",
+            "url": "www.chakratraining.com"
+        }
+    ],
+    "onlineCourses": [
+        {
+            "title": "Course1",
+            "school": "School1",
+            "date": "2012",
+            "url": "http: //..."
+        },
+        {
+            "title": "Course2",
+            "school": "School2",
+            "date": "2013",
+            "url": "http: //..."
+        }
+    ],
+    "display": "function() { return \"function taking no parameters\"; }"
+}
