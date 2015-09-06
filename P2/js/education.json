@@ -2,40 +2,51 @@
     "schools": [
         {
             "name": "University of Ever Lasting Life",
-            "location": "Sedona, AZ",
-            "degree": "Bachelors of Crystal Divination",
+            "location": "1990 W State Rte 89A, Sedona, AZ",
+            "degree": "Bachelors of Enlightened Divination",
             "majors": [
-                "Crystal Idenfication",
+                "Rain Gathering",
+                "Truth Seeking",
                 "Gemology"
             ],
-            "dates": "2020",
+            "dates": "January 3rd, 2015 - March 23, 2015",
             "url": "http://www.sedona.k12.az.us/"
         },
         {
             "name": "Ark Covenent School of the South",
-            "location": "Machu Picho, Chile",
+            "location": "1105 Airport Rd, Sedona, AZ 86336",
             "degree": "Master of Chacra Interpretation",
             "majors": [
                 "Color Theory",
-                "Energy Reading"
+                "Energy Reading",
+                "Chanting"
             ],
-            "dates": "2050",
+            "dates": "June 23, 2013 - August 1st, 2013",
             "url": "www.chakratraining.com"
         }
     ],
     "onlineCourses": [
         {
-            "title": "Course1",
-            "school": "School1",
-            "date": "2012",
-            "url": "http: //..."
+            "title": "The Secrets of Chakra Wisdom",
+            "school": "Deborah Kings Lifeforce Program",
+            "date": "March 1st, 2014 - March 3rd, 2014",
+            "url": "https://deborahking.com/chakra-wisdom-course/"
         },
         {
-            "title": "Course2",
-            "school": "School2",
-            "date": "2013",
-            "url": "http: //..."
+            "title": "Introduction to Vedic Astrology ",
+            "school": "The International Academy of Astrology",
+            "date": "April 22nd, 2014 - May 2nd, 2014",
+            "url": "http://www.astrocollege.org/academic/course.cgi?COURSE_CODE=1405524344-24386"
+        },
+        {
+            "title": "NAT-1 Foundations in Astrology (Modern Astrology Diploma)",
+            "school": "The International Academy of Astrology",
+            "date": "March 22nd, 2014 - March 28th, 2014",
+            "url": "http://www.astrocollege.org/academic/course.cgi?COURSE_CODE=1029869608-25617"
         }
+
+
+
     ],
     "display": "function() { return \"function taking no parameters\"; }"
 }

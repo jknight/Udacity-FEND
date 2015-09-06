@@ -36,7 +36,7 @@ function buildMap(locations, images) {
     });
 
     var infowindow = new google.maps.InfoWindow({
-      content: '<h2>Hello</h2><img src="' + image + '">'
+      content: '<h2>Namaste</h2><img class="mapImage" src="' + image + '">'
     });
     google.maps.event.addListener(marker, 'click', function() {
       infowindow.open(map, marker);

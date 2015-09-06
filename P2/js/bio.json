@@ -1,21 +1,32 @@
 {
-  "name": "Jeffrey Knight",
-  "role": "Chant Leader",
+  "name": "Gordon Crying-Bear Wilderness",
+  "role": "Spiritual Healer and Insect Whisperer",
   "contact": 
   {
     "mobile": "(814) 143-1234",
-    "email": "bob@home.com",
-    "github": "www.www.com",
-    "twitter": "@om",
-    "location": "earth"
+    "email": "gordon@cryingbear.com",
+    "github": "cryingbear.github.com",
+    "twitter": "@cryingbear",
+    "location": "4055 Navoti Dr, Sedona, AZ 86336"
   }
   ,
-  "welcomeMessage": "Namaste",
+  "welcomeMessage": "This is my resume. There are many like it, but this one is mine.", 
   "skills": [
-    "bird watching",
-    "rain gathering",
-    "chanting"
+    "Healing Touch for Animals Certified Practitioner (HTACP)",
+    "Chakra Reader & Photographer",
+    "Preparer of the Sacred Hut",
+    "Truth Seer and Seeker",
+    "Junior Astrologist",
+    "Insect Whisperer",
+    "Incense Provider",
+    "Intuitive Healer",
+    "Sacred Chanter",
+    "Aromatherapist",
+    "Numerologist",
+    "Rain Gatherer",
+    "Chant Leader",
+    "Gemologist"
   ],
-  "biopic": "http://www.damenationblog.com/wp-content/uploads/2012/10/iStock_000016048703Small.jpg",
+  "biopic": "images/biopic.jpg",
   "display": "function() { return \"function taking no parameters\"; }"
 }

@@ -1,134 +1,167 @@
-function init() {
 
-  var promises = [];
-  promises.push(buildHeader());
-  promises.push(populateWork());
-  promises.push(populateProjects());
-  promises.push(populateEducation());
+function init() 
+{  
+
+  var promises = [$.getJSON("js/bio.json"),
+                  $.getJSON("js/jobs.json"),
+                  $.getJSON("js/projects.json"),
+                  $.getJSON("js/education.json")];
 
   $.when.apply($, promises).done(function(bio, work, projects, education)
-      {
-        var locations = pullLocationsFromJson(bio[0], education[0], work[0]);
-        var images = pullImageUrlsFromJson(projects[0]);
-        buildMap(locations, images);
-      });
+  {
+    //TODO: could do more here to check for failure to get JSON ...
+
+    var bioJson = bio[0];
+    var workJson = work[0];
+    var projectsJson = projects[0];
+    var educationJson = education[0];
+
+    var tc = $("#topContacts");
+    populateContacts(bioJson, tc);
+
+    var tc = $("#footerContacts");
+    populateContacts(bioJson, tc);
+
+    populateHeader(bioJson);
+    populateWork(workJson);
+    populateProjects(projectsJson);
+    populateEducation(educationJson);
+
+    var locationName= "location";
+    var locations = []
+    locations = locations.concat(pullValuesFromJson(bioJson, locationName));
+    locations = locations.concat(pullValuesFromJson(educationJson, locationName));
+    locations = locations.concat(pullValuesFromJson(workJson, locationName));
+
+    var images = pullImageUrlsFromJson(projectsJson); 
+
+    //mapHelper.js:
+    buildMap(locations, images);
+  });
 }
 
-function pullImageUrlsFromJson(projects) {
+function pullValuesFromJson(json, name, output)
+{
+  if(output == null) 
+    output = [];
+
+  for (var item in json)
+  {
+    if (typeof json[item] == "object" && json[item] !== null)
+      pullValuesFromJson(json[item], name, output);
+    else if(item == name)
+      output.push(json[item]);   
+  }
+  return output;
+}
+
+function pullImageUrlsFromJson(projects) 
+{
   var images = [];
-  $.each(projects.projects, function(key, val) {
-    $.each(val.images, function(key, image) {
-      images.push(image);
-    });
-  });
+  $.each(projects.projects, function(key, val) 
+      {
+        $.each(val.images, function(key, image) 
+            {
+              images.push(image);
+            });
+      });
   return images;
 }
 
-function pullLocationsFromJson(bio, education, work) {
-  //TODO: this should really be a recurisve function to pull anything called 'location' from json 
-
-  var locations = [];
-
-  locations.push(bio.contact.location);
-
-  for (var school in education.schools) {
-    locations.push(education.schools[school].location);
-  }
-
-  for (var job in work.jobs) {
-    locations.push(work.jobs[job].location);
-  }
-
-  return locations;
-}
-
-
-function buildHeader() {
-
-  return $.getJSON("js/bio.json", function(data) {
-    var header = $("#header");
-    header.prepend(HTMLheaderRole.replace("%data%", data.role));
-    header.prepend(HTMLheaderName.replace("%data%", data.name));
-    header.append(HTMLbioPic.replace("%data%", data.biopic));
-    header.append(HTMLwelcomeMsg.replace("%data%", data.welcomeMessage));
-    header.append(HTMLskillsStart);
-    $.each(data.skills, function(a, skill) {
-      header.append(HTMLskills.replace("%data%", skill));
-    });
-
-    var tc = $("#topContacts");
-    //tc.append(HTMLcontactGeneric.replace("%contact%", "CONTACT").replace("%data%", ""));
-    tc.append(HTMLmobile.replace("%data%", data.contact.mobile));
-    tc.append(HTMLemail.replace("%data%", data.contact.email));
-    tc.append(HTMLtwitter.replace("%data%", data.contact.twitter));
-    tc.append(HTMLgithub.replace("%data%", data.contact.github));
-    //tc.append(HTMLblog.replace("%data%", data.contact.blog));
-    tc.append(HTMLlocation.replace("%data%", data.contact.location)); 
-  });
-}
-
-function populateWork() {
-  return $.getJSON("js/jobs.json", function(data) {
-    h2 = $("#workExperience");
-    $.each(data.jobs, function(key, val) {
-      h2.append(HTMLworkStart);
-      h2.append(HTMLworkEmployer.replace("%data%", val.employer));
-      h2.append(HTMLworkTitle.replace("%data%", val.title));
-      h2.append(HTMLworkDates.replace("%data%", val.dates));
-      h2.append(HTMLworkLocation.replace("%data%", val.location));
-      h2.append(HTMLworkDescription.replace("%data%", val.description));
-    });
-  });
-}
-
-function populateProjects() {
-  return $.getJSON("js/projects.json", function(data) {
-    h2 = $("#projects");
-    $.each(data.projects, function(key, val) {
-      h2.append(HTMLprojectStart);
-      h2.append(HTMLprojectTitle.replace("%data%", val.title));
-      h2.append(HTMLprojectDates.replace("%data%", val.dates));
-      h2.append(HTMLprojectDescription.replace("%data%", val.description));
-      $.each(val.images, function(a, image) {
-        h2.append(HTMLprojectImage.replace("%data%", image));
-      });
-    });
-
-  });
-}
-
-function populateEducation() {
-  return $.getJSON( "js/education.json", function(data) {
-
-    h2 = $("#education");
-
-    $.each(data.schools, function(key, val) {
-      h2.append(HTMLschoolStart);
-      h2.append(HTMLschoolName.replace("%data%", val.name));
-      h2.append(HTMLschoolDegree.replace("%data%", val.degree));
-      h2.append(HTMLschoolDates.replace("%data%", val.dates));
-      h2.append(HTMLschoolLocation.replace("%data%", val.location));
-      $.each(val.majors, function(a, major) {
-        h2.append(HTMLschoolMajor.replace("%data%", major));
-      });
-    });
-
-    h2.append(HTMLonlineClasses);
-    $.each(data.onlineCourses, function(key, val) {
-      h2.append(HTMLonlineTitle.replace("%data%", val.title));
-      h2.append(HTMLonlineSchool.replace("%data%", val.school));
-      h2.append(HTMLonlineDates.replace("%data%", val.date));
-      h2.append(HTMLonlineURL.replace("%data%", val.url));
-    });
-
-  });
-}
-
-function populateMap(bio, work, projects, education)
+function populateHeader(data) 
 {
-  console.log("bio", bio);
-  console.log("work", work);
-  console.log("projects", projects);
-  console.log("education", education);
+  var header = $("#header");
+  //header.prepend(HTMLheaderRole.replace("%data%", data.role)); //don't really need this
+  header.prepend(HTMLheaderName.replace("%data%", data.name));
+  header.append(HTMLbioPic.replace("%data%", data.biopic));
+  header.append(HTMLwelcomeMsg.replace("%data%", data.welcomeMessage));
+  //header.append(HTMLskillsStart); //don't really need this
+  $.each(data.skills, function(a, skill) 
+  {
+    header.append(HTMLskills.replace("%data%", skill));
+  });
+}
+
+function populateContacts(data, tc)
+{
+  //tc.append(HTMLcontactGeneric.replace("%contact%", "CONTACT").replace("%data%", ""));
+  var htmlContact = HTMLcontactTemplate.replace("%mobile%", data.contact.mobile)
+                                       .replace("%email%", data.contact.email)
+                                       .replace("%twitter%", data.contact.twitter)
+                                       .replace("%github%", data.contact.github)
+                                       .replace("%location%", data.contact.location);
+            
+  tc.append(htmlContact);
+}
+
+function populateWork(data) 
+{
+  h2 = $("#workExperience");
+  $.each(data.jobs, function(key, val) 
+  {
+    var workItemHtml = HTMLworkTemplate.replace("%employer%", val.employer)
+                                           .replace("%employerUrl%", val.employerUrl)
+                                           .replace("%title%", val.title)
+                                           .replace("%dates%", val.dates)
+                                           .replace("%location%", val.location)
+                                           .replace("%description%", val.description);
+                                           
+    h2.append(HTMLworkStart);
+    h2.append(workItemHtml);
+  });
+}
+
+function populateProjects(data) 
+{
+  h2 = $("#projects");
+  $.each(data.projects, function(key, val) 
+      {
+        var projectHtml = HTMLprojectTemplate.replace("%title%", val.title)
+                                             .replace("%dates%", val.dates)
+                                             .replace("%description%", val.description);
+
+        $.each(val.images, function(a, image) 
+        {
+          projectHtml += HTMLprojectTemplateImage.replace("%image%", image);
+        });
+
+        h2.append(HTMLprojectStart);
+        h2.append(projectHtml);
+      });
+}
+
+function populateEducation(data) 
+{
+  h2 = $("#education");
+
+  h2.append(HTMLschoolStart);
+  $.each(data.schools, function(key, val) 
+  {
+    var schoolHtmlMajors = "";
+    $.each(val.majors, function(a, major) 
+    {
+      schoolHtmlMajors += HTMLschoolTemplateMajor.replace("%major%", major);
+    });
+
+    var schoolHtml = HTMLschoolTemplate.replace("%name%", val.name)
+                                       .replace("%degree%", val.degree)
+                                       .replace("%dates%", val.dates)
+                                       .replace("%location%", val.location)
+                                       .replace("%majors%", schoolHtmlMajors);
+
+    
+
+    h2.append(schoolHtml);
+  });
+
+  h2.append(HTMLonlineClassesStart);
+  $.each(data.onlineCourses, function(key, val) 
+      {
+        var onlineClassesHtml = HTMLonlineClassesTemplate.replace("%title%", val.title)
+                                                         .replace("%school%", val.school)
+                                                         .replace("%date%", val.date)
+                                                         .replace("%url%", val.url);
+       h2.append(onlineClassesHtml);
+      });
 }
 

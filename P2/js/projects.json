@@ -1,21 +1,24 @@
 {
     "projects": [
         {
-            "title": "Chakra Healing",
-            "dates": "2020/01/01 - 2021/01-01",
-            "description": " Chakras are Entry Gates of the Aura.\nWithin the physical body resides a body double, a spiritual body, that contains the Chakras. The word Chakra in Sanscrit translates to wheel or disc.",
+            "title": "Chakras and Sacred Photography",
+            "dates": "January 22nd, 2013 - January 30th, 2013",
+            "description": " Chakras are Entry Gates of the Aura.\nWithin the physical body resides a body double, a spiritual body, that contains the Chakras. The history of photography has roots in remote antiquity with the discovery of the principle of the camera obscura and the observation that some substances are visibly altered by exposure to light. As far as is known, nobody thought of bringing these two phenomena together to capture camera images in permanent form until around 1800, when Thomas Wedgwood made the first reliably documented although unsuccessful attempt. The word Chakra in Sanscrit translates to wheel or disc.",
             "images": [
                 "images/project1-image1.jpg",
-                "images/project1-image2.jpg"
+                "images/project1-image2.jpg",
+                "images/project1-image3.jpg"
             ]
         },
         {
-            "title": "Nature. Water. Love",
-            "dates": "2020/01/01 - 2021/01-01",
-            "description": "They absorb and transmit energies to and from the universe, nature, celestial entities, from people even from things. ",
+            "title": "Nature, Love, and the Green Giant: A Shamanistic Investigation into the Inner Sanctum of Gaia",
+            "dates": "February 14th, 2014",
+            "description": "The Gaia hypothesis, also known as Gaia theory or Gaia principle, proposes that organisms interact with their  brand Green Giant Great Big Tender Peas was first used in 1925, and the figure of a giant was introduced three years later. The brand was created in response to the discovery of a new variety of pea, the Prince of Wales: they were, as Martin Sloan relates, 'inorganic surroundings on Earth to form a self-regulating, complex system that contributes to maintaining the conditions for life on the planet. Topics of interest include how the biosphere and the evolution of life forms affect the stability of global temperature, ocean salinity, oxygen in the atmosphere and other environmental variables that affect the habitability of Earth.'",
             "images": [
-                "images/project1-image2.jpg",
-                "images/project1-image1.jpg"
+                "images/project2-image1.jpg",
+                "images/project2-image4.jpg",
+                "images/project2-image2.jpg",
+                "images/project2-image3.jpg"
             ]
         }
     ],

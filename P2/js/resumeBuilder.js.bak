@@ -1,0 +1,152 @@
+
+function init() 
+{  
+  var pupulatePromises = [populateHeader(), populateWork(), 
+                    populateProjects(), populateEducation()];
+
+  $.when.apply($, populatePromises).done(function(bio, work, 
+                    projects, education)
+  {
+    var locationName= "location";
+    var locations = []
+    locations = locations.concat(pullValuesFromJson(bio[0], locationName));
+    locations = locations.concat(pullValuesFromJson(education[0], locationName));
+    locations = locations.concat(pullValuesFromJson(work[0], locationName));
+
+    var images = pullImageUrlsFromJson(projects[0]); 
+
+    //mapHelper.js:
+    buildMap(locations, images);
+  });
+}
+
+function pullValuesFromJson(json, name, output)
+{
+  if(output == null) 
+    output = [];
+
+  for (var item in json)
+  {
+    if (typeof json[item] == "object" && json[item] !== null)
+      pullValuesFromJson(json[item], name, output);
+    else if(item == name)
+      output.push(json[item]);   
+  }
+  return output;
+}
+
+function pullImageUrlsFromJson(projects) 
+{
+  var images = [];
+  $.each(projects.projects, function(key, val) 
+  {
+    $.each(val.images, function(key, image) 
+    {
+      images.push(image);
+    });
+  });
+  return images;
+}
+
+/* The functions below build the header and body based on JSON
+ * Please note that since they're getting the JSON asynchronously, 
+ * they're return getJSON's deferred promise which we'll later use
+ * to pull out the json output for building the map - this way we 
+ * make the async call to get the json once per json and are able to use
+ * it twice. A possible refactoring might be to return the set of promises
+ * without all the inline work in the build...() functions and then 
+ * use it all at once */
+function populateHeader() 
+{
+  return $.getJSON("js/bio.json", function(data) 
+  {
+    var header = $("#header");
+    header.prepend(HTMLheaderRole.replace("%data%", data.role));
+    header.prepend(HTMLheaderName.replace("%data%", data.name));
+    header.append(HTMLbioPic.replace("%data%", data.biopic));
+    header.append(HTMLwelcomeMsg.replace("%data%", data.welcomeMessage));
+    header.append(HTMLskillsStart);
+    $.each(data.skills, function(a, skill) 
+    {
+      header.append(HTMLskills.replace("%data%", skill));
+    });
+
+    var tc = $("#topContacts");
+    //tc.append(HTMLcontactGeneric.replace("%contact%", "CONTACT").replace("%data%", ""));
+    tc.append(HTMLmobile.replace("%data%", data.contact.mobile));
+    tc.append(HTMLemail.replace("%data%", data.contact.email));
+    tc.append(HTMLtwitter.replace("%data%", data.contact.twitter));
+    tc.append(HTMLgithub.replace("%data%", data.contact.github));
+    //tc.append(HTMLblog.replace("%data%", data.contact.blog));
+    tc.append(HTMLlocation.replace("%data%", data.contact.location)); 
+  });
+}
+
+function populateWork() 
+{
+  return $.getJSON("js/jobs.json", function(data) 
+  {
+    h2 = $("#workExperience");
+    $.each(data.jobs, function(key, val) 
+    {
+      h2.append(HTMLworkStart);
+      h2.append(HTMLworkEmployer.replace("%data%", val.employer));
+      h2.append(HTMLworkTitle.replace("%data%", val.title));
+      h2.append(HTMLworkDates.replace("%data%", val.dates));
+      h2.append(HTMLworkLocation.replace("%data%", val.location));
+      h2.append(HTMLworkDescription.replace("%data%", val.description));
+    });
+  });
+}
+
+function populateProjects() 
+{
+  return $.getJSON("js/projects.json", function(data) 
+  {
+    h2 = $("#projects");
+    $.each(data.projects, function(key, val) 
+    {
+      h2.append(HTMLprojectStart);
+      h2.append(HTMLprojectTitle.replace("%data%", val.title));
+      h2.append(HTMLprojectDates.replace("%data%", val.dates));
+      h2.append(HTMLprojectDescription.replace("%data%", val.description));
+      $.each(val.images, function(a, image) 
+      {
+        h2.append(HTMLprojectImage.replace("%data%", image));
+      });
+    });
+
+  });
+}
+
+function populateEducation() 
+{
+  return $.getJSON( "js/education.json", function(data) 
+  {
+    h2 = $("#education");
+
+    $.each(data.schools, function(key, val) 
+    {
+      h2.append(HTMLschoolStart);
+      h2.append(HTMLschoolName.replace("%data%", val.name));
+      h2.append(HTMLschoolDegree.replace("%data%", val.degree));
+      h2.append(HTMLschoolDates.replace("%data%", val.dates));
+      h2.append(HTMLschoolLocation.replace("%data%", val.location));
+      $.each(val.majors, function(a, major) 
+      {
+        h2.append(HTMLschoolMajor.replace("%data%", major));
+      });
+    });
+
+    h2.append(HTMLonlineClasses);
+    $.each(data.onlineCourses, function(key, val) 
+    {
+      h2.append(HTMLonlineTitle.replace("%data%", val.title));
+      h2.append(HTMLonlineSchool.replace("%data%", val.school));
+      h2.append(HTMLonlineDates.replace("%data%", val.date));
+      h2.append(HTMLonlineURL.replace("%data%", val.url));
+    });
+
+  });
+}
+

@@ -18,15 +18,22 @@ h6 {
   overflow: auto;
 }
 
-.education-entry,
-.work-entry,
-.project-entry {
+.projects, 
+.work,
+.education {
   padding: 0 5%;
+}
+
+.project-entry, 
+.work-entry,
+.education-entry {
+  margin-top: 10px;
+  font-size: 20px;
 }
 
 h1 {
   font-size: 40px;
-  color: #f5a623;
+  color: #bf57a4;;
   line-height: 48px;
   display: inline;
 }
@@ -34,40 +41,39 @@ h1 {
 h2 {
   font-weight: bold;
   font-size: 24px;
-  color: #999;
   line-height: 29px;
-  padding: 10px;
+  border-bottom: 1px solid #88b1df;
+  margin-bottom: 10px;
 }
 
 h3 {
-  font-style: italic;
   font-size: 20px;
   color: #000;
   line-height: 22px;
+  margin-top: 20px;
 }
-
+/*
 h4 {
-  font-weight: bold;
-  font-size: 14px;
-  color: #4a4a4a;
-  line-height: 17px;
+font-weight: bold;
+font-size: 14px;
+color: pink;;
+line-height: 17px;
 }
+ */
 
-h2,
-h3,
+/*h2,
+h3,*/
 h4,
 h5 {
   padding:10px 5%;
 
 }
 
-
 .date-text {
   font-style: italic;
   font-size: 14px;
   color: #999;
   line-height: 16px;
-  float: left;
 }
 
 .location-text {
@@ -75,10 +81,10 @@ h5 {
   font-size: 14px;
   color: #999;
   line-height: 16px;
-  float: right;
 
 }
 
+/* description text*/
 p {
   font-size: 14px;
   color: #333;
@@ -89,51 +95,50 @@ a {
   color: #1199c3;
   text-decoration: none;
   margin-top: 10px;
-  display: block;
+  /*display: block;*/
 }
 
 .welcome-message {
   font-style: italic;
   font-size: 18px;
-  color: #f3f3f3;
+  color: purple;;
   line-height: 28px;
 }
 
 #skills-h3 {
-  color: #f5ae23;
-  display: none;
+  color: #d4e6b6;
+  margin: 0;
+}
+
+.skills-list { 
+  list-style-type: none;
 }
 
 .orange {
-  background-color: #f5ae23;
+  background-color: #bf57a4;
 }
 
 .orange-text {
-  color: #f5ae23;
+  color: #bf57a4;
 }
 
 .white-text {
-  font-weight: bold;
   color: #fff;
 }
 
-.blue {
-  background-image:url("http://www.hdwallpaperscool.com/wp-content/uploads/2015/01/blue-water-desktop-wide-hd-wallpapers-for-background.jpg");
-}
-
 .gray {
-  background-color: #f3f3f3;
+  background-color: #f3efed;;
   padding-bottom: 10px;
   clear:both;
 }
-
+/*
 .dark-gray {
-  background-color: #4a4a4a;
+background-color: #f3efed;
 }
+ */
 
-/* TODO: Replace with image later */
-#header {
-  background-color: #484848;
+#header, #footer {
+  background-color: #294e2f;
 }
 
 .flex-box {
@@ -204,12 +209,35 @@ span {
 #map {
   display: block;
   height: 100%;
-  margin: 0 5%;
+}
+
+.mapImage {
+  height:200px;
+  width:200px;
+}
+
+ul.majors { 
+  list-style: none; 
+  display: inline; 
+  margin: 0; 
+  padding: 0; 
+}
+
+ul.majors li { 
+  display: inline; 
+}
+
+ul.majors li:after { 
+  content: ", "; 
+}
+
+ul.majors li:last-child:after { 
+  content: ""; 
 }
 
 #mapDiv {
   height: 400px;
-  width: 100%;
+  width: 80%;
   padding-bottom: 5%;
 }
 
