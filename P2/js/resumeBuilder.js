@@ -20,15 +20,15 @@ function init() {
     var educationJson = education[0];
 
     var tc = $("#topContacts");
-    populateContacts(bioJson, tc);
+    bio.populateContacts(bioJson, tc);
 
     var tc = $("#footerContacts");
-    populateContacts(bioJson, tc);
+    bio.populateContacts(bioJson, tc);
 
-    populateHeader(bioJson);
-    populateWork(workJson);
-    populateProjects(projectsJson);
-    populateEducation(educationJson);
+    bio.populateHeader(bioJson);
+    work.populate(workJson);
+    projects.populate(projectsJson);
+    education.populate(educationJson);
 
     var locationName = "location";
     var locations = []
@@ -39,7 +39,7 @@ function init() {
     var images = pullImageUrlsFromJson(projectsJson);
 
     //in mapHelper.js:
-    buildMap(locations, images);
+    map.build(locations, images);
   });
 }
 
@@ -66,7 +66,7 @@ function pullImageUrlsFromJson(projects) {
   return images;
 }
 
-function populateHeader(data) {
+bio.populateHeader = function(data) {
   var header = $("#header");
 
   //skipping these - don't really need them:
@@ -81,7 +81,7 @@ function populateHeader(data) {
   });
 }
 
-function populateContacts(data, tc) {
+bio.populateContacts = function(data, tc) {
   var htmlContact = HTMLcontactTemplate.replace("%mobile%", data.contact.mobile)
     .replace("%email%", data.contact.email)
     .replace("%twitter%", data.contact.twitter)
@@ -91,7 +91,7 @@ function populateContacts(data, tc) {
   tc.append(htmlContact);
 }
 
-function populateWork(data) {
+work.populate = function(data) {
   h2 = $("#workExperience");
   $.each(data.jobs, function(key, val) {
     var workItemHtml = HTMLworkTemplate.replace("%employer%", val.employer)
@@ -106,7 +106,7 @@ function populateWork(data) {
   });
 }
 
-function populateProjects(data) {
+projects.populate = function(data) {
   h2 = $("#projects");
   $.each(data.projects, function(key, val) {
     var projectHtml = HTMLprojectTemplate.replace("%title%", val.title)
@@ -122,7 +122,7 @@ function populateProjects(data) {
   });
 }
 
-function populateEducation(data) {
+education.populate = function(data) {
   h2 = $("#education");
 
   h2.append(HTMLschoolStart);
