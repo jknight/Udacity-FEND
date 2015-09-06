@@ -1,21 +1,18 @@
 {
-    "jobs": [
-        {
-            "employer": "Sedona Crystal Vortex",
-            "employerUrl": "http://sedonacrystalvortex.com",
-            "title": "Junor Gemologist",
-            "location": "300 N State Rte 89A, Sedona, AZ 86336",
-            "dates": "January 15th, 2010 - January 23rd, 2010",
-            "description": "Discerned information through the use of heightened perceptive abilities. Used natural extensions of the basic human senses of sight, sound, touch, taste and instinct to read auras. Show me a gemologists who can't do a complete diamond analysis with just the loupe, and I will show you a gemologists who is not worth much on a buying trip. Learn to grade with just a loupe! It will be the greatest benefit to your gemological ability that you will learn."
-        },
-        {
-            "employer": "Sacred Light of Sedona",
-            "employerUrl": "http://sacredlightofsedona.com/",
-            "title": "Aura Photograher",
-            "location": "1456 Hwy 179, Sedona, AZ 86336",
-            "dates": "February 10th, 2010 - February 13th, 2010",
-            "description": "I offer four types of aromatherapy consultations; personal, business, education, and weddings. Below you will find a brief summary of what each type of aromatherapy consultation offers, and the charges attached to the consultation. If you have any questions that I not answered on this page, please do not hesitate to contact me!"
-        }
-    ],
-    "display": "function() { return \"function taking no parameters\"; }"
+  "jobs": [{
+    "employer": "Sedona Crystal Vortex",
+    "employerUrl": "http://sedonacrystalvortex.com",
+    "title": "Junor Gemologist",
+    "location": "300 N State Rte 89A, Sedona, AZ 86336",
+    "dates": "January 15th, 2010 - January 23rd, 2010",
+    "description": "Discerned information through the use of heightened perceptive abilities. Used natural extensions of the basic human senses of sight, sound, touch, taste and instinct to read auras. Show me a gemologists who can't do a complete diamond analysis with just the loupe, and I will show you a gemologists who is not worth much on a buying trip. Learn to grade with just a loupe! It will be the greatest benefit to your gemological ability that you will learn."
+  }, {
+    "employer": "Sacred Light of Sedona",
+    "employerUrl": "http://sacredlightofsedona.com/",
+    "title": "Aura Photograher",
+    "location": "1456 Hwy 179, Sedona, AZ 86336",
+    "dates": "February 10th, 2010 - February 13th, 2010",
+    "description": "I offer four types of aromatherapy consultations; personal, business, education, and weddings. Below you will find a brief summary of what each type of aromatherapy consultation offers, and the charges attached to the consultation. If you have any questions that I not answered on this page, please do not hesitate to contact me!"
+  }],
+  "display": "function() { return \"function taking no parameters\"; }"
 }

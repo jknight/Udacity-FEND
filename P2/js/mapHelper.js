@@ -1,4 +1,3 @@
-
 function buildMap(locations, images) {
 
   var iconClickCounter = 0;
@@ -12,21 +11,15 @@ function buildMap(locations, images) {
   // Set the boundaries of the map based on pin locations
   window.mapBounds = new google.maps.LatLngBounds();
 
-  // creates pins on the map for each location in the locations array
   pinPoster(locations);
 
-  /*
-     read Google Places search results to create map pins.
-     placeData is the object returned from search results containing information
-     about a single location.
-     */
   function createMapMarker(placeData, image) {
 
     // save location data from the search result object to local variables
-    var lat = placeData.geometry.location.lat();  
-    var lon = placeData.geometry.location.lng();  
-    var name = placeData.formatted_address;   
-    var bounds = window.mapBounds;            
+    var lat = placeData.geometry.location.lat();
+    var lon = placeData.geometry.location.lng();
+    var name = placeData.formatted_address;
+    var bounds = window.mapBounds;
 
     // additional data about the pin for a single location
     var marker = new google.maps.Marker({
@@ -57,7 +50,7 @@ function buildMap(locations, images) {
       //pull images from our array of images and use them for the map popups.
       //they're actually not related to the locations but ... oh well they look nice.
       var image = images[iconClickCounter];
-      iconClickCounter = iconClickCounter == images.length-1 ? 0 : ++iconClickCounter;
+      iconClickCounter = iconClickCounter == images.length - 1 ? 0 : ++iconClickCounter;
 
       createMapMarker(results[0], image);
     }
@@ -88,3 +81,4 @@ window.addEventListener('resize', function(e) {
   //Make sure the map bounds get updated on page resize
   map.fitBounds(mapBounds);
 });
+

@@ -1,16 +1,14 @@
 {
   "name": "Gordon Crying-Bear Wilderness",
   "role": "Spiritual Healer and Insect Whisperer",
-  "contact": 
-  {
+  "contact": {
     "mobile": "(814) 143-1234",
     "email": "gordon@cryingbear.com",
     "github": "cryingbear.github.com",
     "twitter": "@cryingbear",
     "location": "4055 Navoti Dr, Sedona, AZ 86336"
-  }
-  ,
-  "welcomeMessage": "This is my resume. There are many like it, but this one is mine.", 
+  },
+  "welcomeMessage": "This is my resume. There are many like it, but this one is mine.",
   "skills": [
     "Healing Touch for Animals Certified Practitioner (HTACP)",
     "Chakra Reader & Photographer",
