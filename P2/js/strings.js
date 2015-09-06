@@ -2,7 +2,7 @@
  * This file contains string templates that will be swapped out with values and 
  * dynamically inserted into our html.
  *
- * Udacity Reviewer: Please not that I combined these were it made sense into 
+ * Udacity Reviewer: Please note that I combined serveral of these sense into 
  * 'templates' rather than appending lots of individual items. This is much 
  * cleaner and more flexible 
  * */
