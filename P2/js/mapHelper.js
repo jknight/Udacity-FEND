@@ -1,4 +1,4 @@
-function buildMap(locations, images) {
+map.build = function(locations, images) {
 
   var iconClickCounter = 0;
 
