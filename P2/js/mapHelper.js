@@ -1,5 +1,3 @@
-var map;
-
 function buildMap(locations, images) {
 
   var iconClickCounter = 0;
@@ -8,12 +6,15 @@ function buildMap(locations, images) {
     disableDefaultUI: true
   };
 
-  map = new google.maps.Map(document.querySelector('#map'), mapOptions);
+  var map = new google.maps.Map(document.querySelector('#map'), mapOptions);
 
-  // Set the boundaries of the map based on pin locations
   window.mapBounds = new google.maps.LatLngBounds();
 
   pinPoster(locations);
+
+  window.addEventListener('resize', function(e) {
+    map.fitBounds(mapBounds);
+  });
 
   function createMapMarker(placeData, image) {
 
@@ -35,11 +36,11 @@ function buildMap(locations, images) {
     });
     google.maps.event.addListener(marker, 'click', function() {
       infowindow.open(map, marker);
-
     });
 
     // given a location object, add pin to the map.
     bounds.extend(new google.maps.LatLng(lat, lon));
+
     // fit the map to the new marker
     map.fitBounds(bounds);
 
@@ -77,10 +78,15 @@ function buildMap(locations, images) {
 
 }
 
+/*
+//NOTE: This give me an error when resizing the window ...
+//
 // Vanilla JS way to listen for resizing of the window
 // and adjust map bounds
 window.addEventListener('resize', function(e) {
   //Make sure the map bounds get updated on page resize
   map.fitBounds(mapBounds);
-});
+  });
+
+*/
 
