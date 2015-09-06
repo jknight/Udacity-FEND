@@ -1,4 +1,6 @@
-map.build = function(locations, images) {
+function Map() {}
+
+Map.prototype.build = function(locations, images) {
 
   var iconClickCounter = 0;
 
@@ -76,7 +78,7 @@ map.build = function(locations, images) {
     }
   }
 
-}
+};
 
 /*
 // Vanilla JS way to listen for resizing of the window
