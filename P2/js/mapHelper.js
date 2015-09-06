@@ -1,3 +1,5 @@
+var map;
+
 function buildMap(locations, images) {
 
   var iconClickCounter = 0;
@@ -6,7 +8,7 @@ function buildMap(locations, images) {
     disableDefaultUI: true
   };
 
-  var map = new google.maps.Map(document.querySelector('#map'), mapOptions);
+  map = new google.maps.Map(document.querySelector('#map'), mapOptions);
 
   // Set the boundaries of the map based on pin locations
   window.mapBounds = new google.maps.LatLngBounds();
