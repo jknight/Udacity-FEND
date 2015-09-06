@@ -20,20 +20,19 @@ function init() {
     var educationJson = education[0];
 
     var bio = new Bio(bioJson);
-    var tc = $("#topContacts");
-    var fc= $("#footerContacts");
-    bio.populateContacts(tc);
-    bio.populateContacts(fc);
     bio.populateHeader();
+    bio.populateContacts($("#topContacts"));
+    bio.populateContacts($("#footerContacts"));
 
     var work = new Work(workJson);
     work.populate();
 
-    var projects = new Projects(projectsJson);
-    projects.populate();
-
     var education = new Education(educationJson);
     education.populate();
+
+    var projects = new Projects(projectsJson);
+    projects.populate();
+    var images = projects.pullImageUrls();
 
     var locations = []
     var name = "location";
@@ -41,7 +40,6 @@ function init() {
     locations = locations.concat(pullValuesFromJson(educationJson, name));
     locations = locations.concat(pullValuesFromJson(workJson, name));
 
-    var images = projects.pullImageUrls();
 
     //in mapHelper.js:
     new Map().build(locations, images);
