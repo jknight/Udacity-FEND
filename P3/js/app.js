@@ -1,35 +1,27 @@
-// Enemies our player must avoid
-var Enemy = function(startX, startY, speed) {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
+/*
+ * Notes for Udacity reviewer:
+ * Nothing too exciting here beyond the initial template from git.
+ * I implemented the player, and gave the enemy some constructor args.
+ * Collision detection implemented with by checking radius from the center
+ * of the sprites.
+ * */
 
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
+
+var Enemy = function(startX, startY, speed) {
     this.sprite = 'images/enemy-bug.png';
     this.x = startX;
     this.y = startY;
     this.speed = speed;
 };
 
-// Update the enemy's position, required method for game
-// Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
-
-    //TODO: it would be nice if Resources told his the resource dimensions!
-    this.x = this.x > ctx.canvas.width ? -171 : this.x + this.speed;;
+    this.x = this.x > ctx.canvas.width ? -171 : this.x + (this.speed * dt);
 };
 
-// Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
 function Player() {
 
     this.sprite = 'images/char-horn-girl.png';
@@ -40,7 +32,6 @@ function Player() {
 
     this.x = this.initialX;
     this.y = this.initialY;
-
 };
 
 Player.prototype.update = function() {
@@ -54,22 +45,34 @@ Player.prototype.update = function() {
 
 Player.prototype.detectCollision = function() {
 
-    var playerLeft = this.x;
-    var playerRight = this.x + 101;
-    var playerTop = this.y;
-    var playerBottom = this.y + 171;
+    //collision detection using circles - see
+    //https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
+
+    var radius = 35;
+    var spriteWidth = 101;
+    var spriteHeight = 171;
+    var playerCircle = {
+        x: (this.x + (spriteWidth / 2)),
+        y: (this.y + (spriteHeight / 2))
+    };
 
     for (var i = 0; i < allEnemies.length; i++) {
 
         var e = allEnemies[i];
+        var enemyCircle = {
+            x: (e.x + (spriteHeight / 2)),
+            y: (e.y + (spriteWidth / 2))
+        };
 
-        if (e.x + 101 > playerLeft 
-            && e.x < playerRight 
-            && e.y + 171 > playerTop 
-            && e.y  < playerBottom) {
+        var dx = playerCircle.x - enemyCircle.x;
+        var dy = playerCircle.y - enemyCircle.y;
+
+        var distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance < (radius * 2)) {
             return true;
         }
     }
+
     return false;
 };
 
@@ -80,41 +83,38 @@ Player.prototype.render = function() {
 Player.prototype.handleInput = function(direction) {
     var yStep = 90;
     var xStep = 90;
-  
+
     //TODO: in future versions, could do a better job calculating these from sprite sizes.
+    // (eg Resources could return dimensions)
     switch (direction) {
         case 'left':
-          if(this.x > 100)
-            this.x -= xStep;
+            if (this.x > 100)
+                this.x -= xStep;
             break;
         case 'right':
-            if(this.x + 200 < ctx.canvas.width)
-              this.x += xStep;
+            if (this.x + 200 < ctx.canvas.width)
+                this.x += xStep;
             break;
         case 'up':
-            if(this.y  > 0)
-            this.y -= yStep;
+            if (this.y > 0)
+                this.y -= yStep;
             break;
         case 'down':
-            if(this.y + 250 < ctx.canvas.height)
-              this.y += yStep;
+            if (this.y + 250 < ctx.canvas.height)
+                this.y += yStep;
             break;
     }
 };
 
 
-// Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
-// Place the player object in a variable called player
-var allEnemies = [new Enemy(0, 55, 1),
-    new Enemy(100, 135, 2)
-    //new Enemy(200, 220, 2)
+//Create three enemeies, giving them initial x/y coords and speed
+var allEnemies = [new Enemy(0, 55, 40),
+    new Enemy(100, 135, 60),
+    new Enemy(200, 220, 100)
 ];
 
 var player = new Player();
 
-// This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
     var allowedKeys = {
         37: 'left',
@@ -124,3 +124,4 @@ document.addEventListener('keyup', function(e) {
     };
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
