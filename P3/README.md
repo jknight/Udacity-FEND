@@ -1,6 +1,18 @@
-frontend-nanodegree-arcade-game
-===============================
+Udacity: FEND P3
+===
 
-Students should use this rubric: https://www.udacity.com/course/viewer#!/c-ud015/l-3072058665/m-3072588797
+Author: Jeffrey Knight <jeffrey.knight@gmail.com>, based on initial framework from Udacity.com
+Date: Fri Sep 11 19:32:33 WEST 2015
 
-for self-checking their submission.
+About
+---
+This is is a version of Frogger written in Javascript.
+
+How to Play
+---
+Use your arrow keys
+
+
+
+
+

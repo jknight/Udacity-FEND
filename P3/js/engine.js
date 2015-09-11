@@ -25,8 +25,9 @@ var Engine = (function(global) {
         ctx = canvas.getContext('2d'),
         lastTime;
 
-    canvas.width = 505;
+    canvas.width = 600;
     canvas.height = 606;
+    ctx.canvas.visibleWidth = 600 - 101; //minus the gutter on the right
     doc.body.appendChild(canvas);
 
     /* This function serves as the kickoff point for the game loop itself
@@ -104,18 +105,19 @@ var Engine = (function(global) {
      */
     function render() {
 
+        //fix an annoying issue where sprites in the top row render off screen and don't repaint
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
         /* This array holds the relative URL to the image used
          * for that particular row of the game level.
          */
         var rowImages = [
-                'images/water-block.png',   // Top row is water
-                'images/stone-block.png',   // Row 1 of 3 of stone
-                'images/stone-block.png',   // Row 2 of 3 of stone
-                'images/stone-block.png',   // Row 3 of 3 of stone
-                'images/grass-block.png',   // Row 1 of 2 of grass
-                'images/grass-block.png'    // Row 2 of 2 of grass
+                'images/water-block.png', // Top row is water
+                'images/stone-block.png', // Row 1 of 3 of stone
+                'images/stone-block.png', // Row 2 of 3 of stone
+                'images/stone-block.png', // Row 3 of 3 of stone
+                'images/grass-block.png', // Row 1 of 2 of grass
+                'images/grass-block.png' // Row 2 of 2 of grass
             ],
             numRows = 6,
             numCols = 5,
@@ -138,8 +140,8 @@ var Engine = (function(global) {
             }
         }
 
-
         renderEntities();
+
     }
 
     /* This function is called by the render function and is called on each game
@@ -147,14 +149,17 @@ var Engine = (function(global) {
      * on your enemy and player entities within app.js
      */
     function renderEntities() {
-        /* Loop through all of the objects within the allEnemies array and call
-         * the render function you have defined.
-         */
         allEnemies.forEach(function(enemy) {
             enemy.render();
         });
 
+        //Cheap trick to give us a right gutter (roaches crawl under gutter)
+        ctx.drawImage(Resources.get('images/right-gutter.png'), ctx.canvas.visibleWidth, 0); 
+
+        scoreboard.render();
+
         player.render();
+
     }
 
     /* This function does nothing but it could have been a good place to
@@ -170,15 +175,18 @@ var Engine = (function(global) {
      * all of these images are properly loaded our game will start.
      */
     Resources.load([
-        'images/stone-block.png',
-        'images/water-block.png',
-        'images/grass-block.png',
-        'images/enemy-bug.png',
-        'images/enemy-cockroach.png',
         'images/char-boy.png',
-        'images/char-horn-girl.png',
         'images/char-horn-girl-skeleton.png',
-        'images/Star.png',
+        'images/char-horn-girl.png',
+        'images/right-gutter.png',
+        'images/enemy-bug.png',
+        'images/enemy-cockroach_f1.png',
+        'images/enemy-cockroach_f2.png',
+        'images/gem-blue.png',
+        'images/grass-block.png',
+        'images/star.png',
+        'images/stone-block.png',
+        'images/water-block.png'
     ]);
     Resources.onReady(init);
 
@@ -187,4 +195,5 @@ var Engine = (function(global) {
      * from within their app.js files.
      */
     global.ctx = ctx;
+
 })(this);
