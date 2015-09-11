@@ -5,10 +5,8 @@
  * - This code is really too long for one file and should be broken out
  * - I'm not very happy with the Player's access to the scoreboard & enemies.
  *   If I was going to do more on this, I'd refactor that control into the main engine
- *   (eg move collision detection into the engine)
- * - For real use, I think there are too many "magic numbers" in here. It would be nice 
- *   if the engine's Resources exposed sprite / image dimensions - that would cut down 
- *   on the hard coding of sprite dimensions here
+ *   (eg move collision detection into the engine). For the time being, use IoC to at 
+ *   least make dependency relationship clear
  * - code formating run through jshint &  js-beautify 
  *
  * */
@@ -26,7 +24,7 @@ var Enemy = function(startX, startY, speed) {
     //      they keep on looping until a new game starts
     this.entryPoint = -80;
 
-    if (startX == 0)
+    if (startX === 0)
         startX = this.entryPoint;
 
     this.x = startX;
@@ -126,7 +124,7 @@ Player.prototype.levelUp = function() {
     //see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
     var random = function getRandomInt(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
+    };
 
     var enemyX = random(0, 300);
     //randomly choose which swim land to place the sprite in (lanes 2 - 5)
@@ -155,10 +153,6 @@ Player.prototype.update = function() {
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-
-    var random = function getRandomInt(min, max) {
-        return Math.floor(Math.random() * (max - min)) + min;
-    }
 };
 
 Player.prototype.handleInput = function(direction) {
@@ -275,8 +269,8 @@ Scoreboard.prototype.render = function() {
     //BUG: once you solve the game 5 times we'll run out of space to print blue 
     //     gems. This could be addressed by starting to print red gems etc.
     //     ad ininitum. I doubt anyone is going to get to the end 25 times.
-    for (var i = 0; i < this.timesSolved; i++) {
-        ctx.drawImage(Resources.get('images/gem-blue.png'), 500, ((i + 0.5) * 101));
+    for (var j = 0; j < this.timesSolved; j++) {
+        ctx.drawImage(Resources.get('images/gem-blue.png'), 500, ((j + 0.5) * 101));
     }
 
     if (this.level == this.maxLevels) {
