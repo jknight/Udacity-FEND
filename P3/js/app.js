@@ -1,14 +1,5 @@
-/*
- * Notes for Udacity reviewer:
- * Nothing too exciting here beyond the initial template from git.
- * I implemented the player, and gave the enemy some constructor args.
- * Collision detection implemented with by checking radius from the center
- * of the sprites.
- * */
-
-
 var Enemy = function(startX, startY, speed) {
-    this.sprite = 'images/enemy-bug.png';
+    this.sprite = 'images/enemy-cockroach.png';
     this.x = startX;
     this.y = startY;
     this.speed = speed;
@@ -24,7 +15,9 @@ Enemy.prototype.render = function() {
 
 function Player() {
 
-    this.sprite = 'images/char-horn-girl.png';
+    this.sprite_alive = 'images/char-horn-girl.png';
+    this.sprite_dead = 'images/char-horn-girl-skeleton.png';
+    this.sprite = this.sprite_alive;
 
     //hard code starting point
     this.initialX = 200;
@@ -34,13 +27,28 @@ function Player() {
     this.y = this.initialY;
 };
 
+Player.prototype.reset = function(o) {
+    if (o == null) o = this;
+    o.x = o.initialX;
+    o.y = o.initialY;
+
+    this.sprite = this.sprite_alive;
+    o.frozen = false;
+    o.success = false;
+};
+
 Player.prototype.update = function() {
 
     var dead = this.detectCollision();
     if (dead) {
-        this.x = this.initialX;
-        this.y = this.initialY;
+        this.sprite = this.sprite_dead;
+        this.frozen = true;
+        var that = this;
+        setTimeout(function() {
+            that.reset(that)
+        }, 1500);
     }
+
 };
 
 Player.prototype.detectCollision = function() {
@@ -78,9 +86,19 @@ Player.prototype.detectCollision = function() {
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    if (this.success) {
+        ctx.drawImage(Resources.get('images/Star.png'), 50, 100);
+        ctx.drawImage(Resources.get('images/Star.png'), 200, 100);
+        ctx.drawImage(Resources.get('images/Star.png'), 350, 100);
+
+    }
+
 };
 
 Player.prototype.handleInput = function(direction) {
+    if (this.frozen)
+        return;
+
     var yStep = 90;
     var xStep = 90;
 
@@ -96,8 +114,20 @@ Player.prototype.handleInput = function(direction) {
                 this.x += xStep;
             break;
         case 'up':
-            if (this.y > 0)
+            if (this.y > 0) {
                 this.y -= yStep;
+
+                if (this.y == -50) {
+
+                    this.success = true;
+                    var that = this;
+                    setTimeout(function() {
+                        that.reset(that)
+                    }, 2000);
+
+
+                }
+            }
             break;
         case 'down':
             if (this.y + 250 < ctx.canvas.height)
@@ -110,7 +140,9 @@ Player.prototype.handleInput = function(direction) {
 //Create three enemeies, giving them initial x/y coords and speed
 var allEnemies = [new Enemy(0, 55, 40),
     new Enemy(100, 135, 60),
-    new Enemy(200, 220, 100)
+    new Enemy(100, 210, 300),
+    new Enemy(220, 135, 60),
+    new Enemy(200, 225, 100)
 ];
 
 var player = new Player();
@@ -124,4 +156,3 @@ document.addEventListener('keyup', function(e) {
     };
     player.handleInput(allowedKeys[e.keyCode]);
 });
-
