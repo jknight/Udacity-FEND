@@ -24,6 +24,11 @@ var Enemy = function(startX, startY, speed) {
 
     //NOTE: enemies never restart. Once they start crawling,
     //      they keep on looping until a new game starts
+    this.entryPoint = -80;
+
+    if(startX == 0)
+      startX = this.entryPoint;
+
     this.x = startX;
     this.y = startY;
     this.startY = startY;
@@ -49,7 +54,7 @@ Enemy.prototype.init = function() {
 
 Enemy.prototype.update = function(dt) {
 
-    this.x = this.x > ctx.canvas.visibleWidth ? -171 /*sprite width*/ : this.x + (this.speed * dt);
+    this.x = this.x > ctx.canvas.visibleWidth ? this.entryPoint : this.x + (this.speed * dt);
 
     //Make the enemy a vacilate up and down a little like it's walking instead of a smooth scroll.
     //The y vacilation is so small and not really relevant to "smooth" motion that I'm not 
@@ -69,7 +74,7 @@ Enemy.prototype.update = function(dt) {
 
 Enemy.prototype.levelUp = function() {
     //increase speed for next level
-    this.speed += 80;
+    this.speed += 0.5;
     //increase sprite frame rate to simulate faster motion
     this.spriteFrameFlipIndex = (this.spriteFrameFlipIndex > 10) ?
         this.spriteFrameFlipIndex - 10 :
@@ -103,7 +108,6 @@ Player.prototype.init = function() {
     this.y = 400;
 
     this.frozen = false;
-    this.success = false;
 };
 
 //TODO: not entirely happy about player being responsible for changing scoreboard & enemies.
@@ -116,17 +120,12 @@ Player.prototype.levelUp = function() {
         return Math.floor(Math.random() * (max - min)) + min;
     }
 
-    var enemyX = -171;
-    random(0, 500);
-    var enemyY = random(50, 300);
-    var enemySpeed = random(10, 30);
+    var enemyX = random(0, 300);
+    var enemyY = random(1, 4) * 101;
+    
+    var enemySpeed = random(10, 50);
 
     this.allEnemies.push(new Enemy(enemyX, enemyY, enemySpeed));
-    //new Enemy(100, 135, 60),
-
-    this.allEnemies.forEach(function(enemy) {
-        enemy.levelUp();
-    });
 
 };
 
@@ -177,9 +176,9 @@ Player.prototype.handleInput = function(direction) {
                 this.y -= yStep;
 
                 if (this.y == -15) { //TODO: what kind of magic is -15? Can this be calculated ?
-                    this.success = true;
+                    this.frozen = true;
                     this.levelUp();
-                    setTimeout(this.init.bind(this), 2000);
+                    setTimeout(this.init.bind(this), 1000);
                 }
                 //else: step up to the next square
             }
@@ -246,7 +245,8 @@ Player.prototype.detectCollision = function() {
 //-- / Player --
 
 //-- Scoreboard --
-var Scoreboard = function() {
+var Scoreboard = function(allEnemies) {
+    this.allEnemies = allEnemies;
     this.maxLevels = 5; //0-based, so it's 5
     this.timesSolved = 0;
     this.init();
@@ -275,6 +275,10 @@ Scoreboard.prototype.render = function() {
 
     if (this.level == this.maxLevels) {
 
+        this.allEnemies.forEach(function(enemy) {
+            enemy.levelUp();
+        });
+
         if (!this.isResetting) //prevent multiple trigerings of setTimeout
         {
             ++this.timesSolved;
@@ -298,8 +302,9 @@ function initEnemies() {
 }
 initEnemies();
 
-var scoreboard = new Scoreboard();
 //Inject dependencies into Player for the sake of clarity & to avoid weird globals
+//Really, this should be refactored to give engine.js control of the situation
+var scoreboard = new Scoreboard(allEnemies);
 var player = new Player(scoreboard, allEnemies);
 
 document.addEventListener('keyup', function(e) {
