@@ -1,8 +1,8 @@
 Udacity: FEND P3
 ===
 
-Author: Jeffrey Knight <jeffrey.knight@gmail.com>, based on initial framework from Udacity.com
-Date: Fri Sep 11 19:32:33 WEST 2015
+- Author: Jeffrey Knight <jeffrey.knight@gmail.com>, based on initial framework from Udacity.com
+- Date: Fri Sep 11 19:32:33 WEST 2015
 
 About
 ---
