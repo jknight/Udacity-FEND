@@ -26,8 +26,8 @@ var Enemy = function(startX, startY, speed) {
     //      they keep on looping until a new game starts
     this.entryPoint = -80;
 
-    if(startX == 0)
-      startX = this.entryPoint;
+    if (startX == 0)
+        startX = this.entryPoint;
 
     this.x = startX;
     this.y = startY;
@@ -91,6 +91,8 @@ Enemy.prototype.render = function() {
 
 //-- Player --
 var Player = function(scoreboard, allEnemies) {
+
+    //player constants
     this.scoreboard = scoreboard;
     this.allEnemies = allEnemies;
 
@@ -100,12 +102,17 @@ var Player = function(scoreboard, allEnemies) {
 Player.prototype.init = function() {
     this.sprite_alive = 'images/char-horn-girl.png';
     this.sprite_dead = 'images/char-horn-girl-skeleton.png';
+    this.sprite_happy = 'images/char-horn-girl-happy.png';
     this.sprite = this.sprite_alive;
 
     //Player's starting point
     //TODO: this would be nicer if it was calculated on board / square size
     this.x = 200;
     this.y = 400;
+
+    //101 and 83 values come from engine.js - they should be generally available instead of hard coded
+    this.yStep = 83;
+    this.xStep = 101;
 
     this.frozen = false;
 };
@@ -116,13 +123,15 @@ Player.prototype.init = function() {
 Player.prototype.levelUp = function() {
     this.scoreboard.levelUp();
 
+    //see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
     var random = function getRandomInt(min, max) {
-        return Math.floor(Math.random() * (max - min)) + min;
+        return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
     var enemyX = random(0, 300);
-    var enemyY = random(1, 4) * 101;
-    
+    //randomly choose which swim land to place the sprite in (lanes 2 - 5)
+    var enemyY = random(1, 4) * this.yStep;
+
     var enemySpeed = random(10, 50);
 
     this.allEnemies.push(new Enemy(enemyX, enemyY, enemySpeed));
@@ -146,6 +155,10 @@ Player.prototype.update = function() {
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+
+    var random = function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min)) + min;
+    }
 };
 
 Player.prototype.handleInput = function(direction) {
@@ -155,27 +168,20 @@ Player.prototype.handleInput = function(direction) {
     if (this.frozen)
         return;
 
-    //101 and 83 values come from engine.js - they should be generally available instead of hard coded
-    var yStep = 83;
-    var xStep = 101;
-
-    //TODO: in future versions, could do a better job calculating these from sprite sizes.
-    // (eg Resources could return dimensions)
     switch (direction) {
         case 'left':
-            if (this.x > yStep)
-                this.x -= xStep;
+            this.x = (this.x > 0) ? this.x - this.xStep : this.xStep * 4;
             break;
         case 'right':
-            if (this.x + 200 < ctx.canvas.width)
-                this.x += xStep;
+            this.x = this.x + 200 < ctx.canvas.width ? this.x + this.xStep : 0;
             break;
         case 'up':
             if (this.y > 0) {
 
-                this.y -= yStep;
+                this.y -= this.yStep;
 
                 if (this.y == -15) { //TODO: what kind of magic is -15? Can this be calculated ?
+                    this.sprite = this.sprite_happy;
                     this.frozen = true;
                     this.levelUp();
                     setTimeout(this.init.bind(this), 1000);
@@ -185,7 +191,7 @@ Player.prototype.handleInput = function(direction) {
             break;
         case 'down':
             if (this.y + 250 < ctx.canvas.height)
-                this.y += yStep;
+                this.y += this.yStep;
             break;
     }
 };
@@ -298,7 +304,8 @@ function initEnemies() {
     //clear array. see http://stackoverflow.com/a/1232046/83418
     allEnemies.length = 0;
 
-    allEnemies.push(new Enemy(100, 135, 60));
+    //initial enemy in swim lane #3
+    allEnemies.push(new Enemy(100, (83 * 3), 60));
 }
 initEnemies();
 
