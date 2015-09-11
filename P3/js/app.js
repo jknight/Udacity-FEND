@@ -48,6 +48,7 @@ Enemy.prototype.init = function() {
 };
 
 Enemy.prototype.update = function(dt) {
+
     this.x = this.x > ctx.canvas.visibleWidth ? -171 /*sprite width*/ : this.x + (this.speed * dt);
 
     //Make the enemy a vacilate up and down a little like it's walking instead of a smooth scroll.
@@ -58,6 +59,8 @@ Enemy.prototype.update = function(dt) {
     this.y += this.vacilatingUp ? this.currentVacilation : -(this.currentVacilation);
 
     if (this.currentVacilation > this.vacilationMax) {
+        //poor man's animation: when we hit our vacilation max, flip the frame
+        this.spriteFrame = (this.spriteFrame == this.spriteFrames.length - 1) ? 0 : ++this.spriteFrame;
         this.vacilatingUp = !this.vacilatingUp;
         this.currentVacilation = 0;
     }
@@ -75,13 +78,6 @@ Enemy.prototype.levelUp = function() {
 
 Enemy.prototype.render = function() {
     ++this.spriteRenderCounter;
-
-    if (this.spriteRenderCounter % this.spriteFrameFlipIndex == 0) {
-
-        //paint sprite frames one by one. We only have two for the roaches at the moment, but if we had more
-        //it would better simulate smooth motion
-        this.spriteFrame = (this.spriteFrame == this.spriteFrames.length - 1) ? 0 : ++this.spriteFrame;
-    }
 
     var sprite = Resources.get(this.spriteFrames[this.spriteFrame]);
     ctx.drawImage(sprite, this.x, this.y);
