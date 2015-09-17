@@ -320,7 +320,6 @@ document.addEventListener('keyup', function(e) {
 
 $(document).touchwipe({
     wipeLeft: function() {
-      alert("LEFT");
         player.handleInput("left");
     },
     wipeRight: function() {
