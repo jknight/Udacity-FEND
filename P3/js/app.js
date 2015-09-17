@@ -318,19 +318,19 @@ document.addEventListener('keyup', function(e) {
     player.handleInput(allowedKeys[e.keyCode]);
 });
 
-function up() { 
-  player.handleInput("up"); 
-}
-
-function down() { 
-  player.handleInput("down"); 
-}
-
-function left() { 
-  player.handleInput("left"); 
-}
-
-function right() { 
-  player.handleInput("right"); 
-}
+$(document).touchwipe({
+    wipeLeft: function() {
+      alert("LEFT");
+        player.handleInput("left");
+    },
+    wipeRight: function() {
+        player.handleInput("right");
+    },
+    wipeUp: function() {
+        player.handleInput("up");
+    },
+    wipeDown: function() {
+        player.handleInput("down");
+    }
+});
 
