@@ -326,10 +326,10 @@ $(document).touchwipe({
         player.handleInput("right");
     },
     wipeUp: function() {
-        player.handleInput("up");
+        player.handleInput("down");
     },
     wipeDown: function() {
-        player.handleInput("down");
+        player.handleInput("up");
     }
 });
 
