@@ -162,7 +162,7 @@ var Engine = (function(global) {
      */
     Resources.load([
         'images/char-boy.png',
-        'images/char-horn-girl-skeleton.png',
+        'images/char-horn-girl-sad.png',
         'images/char-horn-girl-happy.png',
         'images/char-horn-girl.png',
         'images/right-gutter.png',

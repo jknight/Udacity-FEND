@@ -99,7 +99,7 @@ var Player = function(scoreboard, allEnemies) {
 
 Player.prototype.init = function() {
     this.sprite_alive = 'images/char-horn-girl.png';
-    this.sprite_dead = 'images/char-horn-girl-skeleton.png';
+    this.sprite_dead = 'images/char-horn-girl-sad.png';
     this.sprite_happy = 'images/char-horn-girl-happy.png';
     this.sprite = this.sprite_alive;
 
