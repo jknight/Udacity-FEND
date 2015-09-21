@@ -1,0 +1,12 @@
+{
+    "name": "Udactity-P4",
+    "devDependencies": {
+        "jshint": "latest",
+        "browserify": "latest",
+        "mocha": "latest"
+    },
+    "scripts": {
+        "lint": "jshint js/**.js",
+        "test": "say ello"
+    }
+}
