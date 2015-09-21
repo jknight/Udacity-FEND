@@ -1,4 +1,9 @@
 
+Developer Notes
+---
+Image optimization with Grunt: 
+> npm install grunt-contrib-imagemin --save-dev
+
 Grunt vs Gulp: Neither: http://blog.keithcirkel.co.uk/why-we-should-stop-using-grunt/
 
 Using npm as a build tool: http://blog.keithcirkel.co.uk/how-to-use-npm-as-a-build-tool/
