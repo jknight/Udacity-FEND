@@ -52,32 +52,6 @@ grunt.initConfig({
         }
     },
 
-    cssmin: {
-        target: {
-            files: [{
-                expand: true,
-                cwd: 'src',
-                src: ['**/*.css'],
-                dest: 'build',
-            }]
-        }
-    },
-
-    htmlmin: {
-        target: { // Target
-            options: { // Target options
-                removeComments: true,
-                collapseWhitespace: true
-            },
-            files: [{ 
-              expand: true,
-              cwd: 'src',
-              src: ['**/*.html'],
-              dest: 'build'
-            }]
-        }
-    },
-
     uglify: {
         target: {
             files: [{
@@ -86,8 +60,52 @@ grunt.initConfig({
                 src: ['**/*.js'],
                 dest: 'build'
             }]
+        }
+    },
+
+    uncss: {
+        dist: {
+            files: {
+                'tmp/tidy.css': ['src/index.html']
+            }
+        }
+    },
+
+    cssmin: {
+        target: {
+            files: {
+                'build/css/tidy.min.css': ['tmp/tidy.css']
+            }
+        }
+    },
+
+    processhtml: {
+        target: {
+            files: [{
+                expand: true,
+                cwd: 'src',
+                src: ['**/*.html'],
+                dest: 'tmp'
+            }]
+        }
+    },
+
+    htmlmin: {
+        target: { 
+            options: {
+                removeComments: true,
+                collapseWhitespace: true
+            },
+            files: [{
+                expand: true,
+                cwd: 'tmp',
+                src: ['**/*.html'],
+                dest: 'build'
+            }]
+        }
     }
-}
+
+
 });
 
 grunt.loadNpmTasks('grunt-contrib-imagemin');
@@ -95,6 +113,8 @@ grunt.loadNpmTasks('grunt-contrib-uglify');
 grunt.loadNpmTasks('grunt-contrib-copy');
 grunt.loadNpmTasks('grunt-contrib-cssmin');
 grunt.loadNpmTasks('grunt-contrib-htmlmin');
+grunt.loadNpmTasks('grunt-uncss');
+grunt.loadNpmTasks('grunt-processhtml');
 
 grunt.registerTask('default',
-    'Main build task', ['copy', 'htmlmin', 'imagemin', 'cssmin', 'uglify']);
+    'Main build task', ['uncss', 'cssmin', 'copy', 'imagemin', 'uglify', 'processhtml','htmlmin' ]);
