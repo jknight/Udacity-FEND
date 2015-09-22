@@ -380,7 +380,7 @@ var makeRandomPizza = function() {
 };
 
 // returns a DOM element for each pizza
-var pizzaElementGenerator = function() {
+var pizzaElementGenerator = function(i) {
     var pizzaContainer, // contains pizza title, image and list of ingredients
         pizzaImageContainer, // contains the pizza image
         pizzaImage, // the pizza image itself
@@ -397,8 +397,7 @@ var pizzaElementGenerator = function() {
     pizzaContainer.style.width = "33.33%";
     pizzaContainer.style.height = "325px";
 
-    //FIX: do this later!
-    //pizzaContainer.id = "pizza" + i;                // gives each pizza element a unique id
+    pizzaContainer.id = "pizza" + i;                // gives each pizza element a unique id
 
     pizzaImageContainer.classList.add("col-md-6");
 
@@ -496,15 +495,12 @@ var resizePizzas = function(size) {
 window.performance.mark("mark_start_generating"); // collect timing data
 
 // This for-loop actually creates and appends all of the pizzas when the page loads
-var genericElement = pizzaElementGenerator();
+var pizzasDiv = document.getElementById("randomPizzas");
 for (var i = 2; i < 100; i++) {
 
-    var specificElement = genericElement.cloneNode(true);
-    specificElement.id = "pizza" + i;
+    var pizzaElement = pizzaElementGenerator(i);
 
-    var pizzasDiv = document.getElementById("randomPizzas");
-    //pizzasDiv.appendChild(pizzaElementGenerator(i));
-    pizzasDiv.appendChild(specificElenent);
+    pizzasDiv.appendChild(pizzaElement);
 }
 
 // User Timing API again. These measurements tell you how long it took to generate the initial pizzas
@@ -536,8 +532,9 @@ function updatePositions() {
     window.performance.mark("mark_start_frame");
 
     var items = document.querySelectorAll('.mover');
+    var scrollTop = document.body.scrollTop;
     for (var i = 0; i < items.length; i++) {
-        var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
+        var phase = Math.sin((scrollTop / 1250) + (i % 5));
         items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
     }
 
@@ -569,7 +566,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     for (var i = 0; i < 200; i++) {
 
-        var elem = elemTemplate.cloneNode(true);
+        var elem = elemTemplate.cloneNode(false);
         elem.basicLeft = (i % cols) * s;
         elem.style.top = (Math.floor(i / cols) * s) + 'px';
 

@@ -1,14 +1,19 @@
 
-Developer Notes
+Udacity Front End Developer NanoDegree (FEND)
+===
+
+Project #4
 ---
-Image optimization with Grunt: 
-> npm install grunt-contrib-imagemin --save-dev
 
-Grunt vs Gulp: Neither: http://blog.keithcirkel.co.uk/why-we-should-stop-using-grunt/
+- Jeffrey Knight <jeffrey.knight@gmail.com>
 
-Using npm as a build tool: http://blog.keithcirkel.co.uk/how-to-use-npm-as-a-build-tool/
+About
+---
 
-Incremental HTML delivery 
+The goal of this project was to improve performance for two mini-sites.
+To accomplish this, I focused on a build system. Using grunt, I set up a series
+of build steps to clean and compress the source code.
 
-You can't do incremental css delivery: css is render blocking !
+
+
 
