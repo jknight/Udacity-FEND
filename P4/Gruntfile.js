@@ -17,11 +17,11 @@ grunt.initConfig({
       },
       */
     copy: {
-        html: {
+        target: {
             expand: true,
-            cwd: 'src/',
-            src: '*',
-            dest: 'build/'
+            cwd: 'src/fonts/',
+            src: '*.*',
+            dest: 'build/fonts'
         }
     },
 
@@ -63,24 +63,38 @@ grunt.initConfig({
         }
     },
 
+    htmlmin: {
+        target: { // Target
+            options: { // Target options
+                removeComments: true,
+                collapseWhitespace: true
+            },
+            files: [{ 
+              expand: true,
+              cwd: 'src',
+              src: ['**/*.html'],
+              dest: 'build'
+            }]
+        }
+    },
+
     uglify: {
-        my_target: {
+        target: {
             files: [{
                 expand: true,
                 cwd: 'src',
                 src: ['**/*.js'],
                 dest: 'build'
             }]
-        }
     }
+}
 });
 
-//  npm install grunt-contrib-imagemin --save-dev
 grunt.loadNpmTasks('grunt-contrib-imagemin');
-// npm install grunt-contrib-uglify --save-dev
 grunt.loadNpmTasks('grunt-contrib-uglify');
 grunt.loadNpmTasks('grunt-contrib-copy');
 grunt.loadNpmTasks('grunt-contrib-cssmin');
+grunt.loadNpmTasks('grunt-contrib-htmlmin');
 
 grunt.registerTask('default',
-    'Main build task', ['imagemin', 'cssmin', 'uglify', 'copy:html']);
+    'Main build task', ['copy', 'htmlmin', 'imagemin', 'cssmin', 'uglify']);
