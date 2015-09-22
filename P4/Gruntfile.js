@@ -145,9 +145,9 @@ grunt.registerTask('default',
 		'clean',
 		'copy:everything', //do this up front. we can overwrite as needed. 
 		'uglify:javascript',
-		//'imagemin',
+		'imagemin',
 		'uncss',
 		'cssmin',
 		'processhtml',
-		//'htmlmin' 
+		'htmlmin' 
 	]);
