@@ -26,34 +26,28 @@ grunt.initConfig({
     },
 
     imagemin: {
-        png: {
-            options: {
-                optimizationLevel: 7
-            },
-            files: [{
-                // Set to true to enable the following options…
-                //expand: true,
-                // cwd is 'current working directory'
-                //cwd: 'src/img/',
-                src: ['**/*.png'],
-                // Could also match cwd line above. i.e. project-directory/img/
-                dest: 'build/img/',
-                ext: '.png'
-            }]
-        },
         jpg: {
             options: {
                 progressive: true
             },
+
             files: [{
-                // Set to true to enable the following options…
-                //expand: true,
-                // cwd is 'current working directory'
-                cwd: 'src/img/',
+                expand: true,
+                cwd: 'src/',
                 src: ['**/*.jpg'],
-                // Could also match cwd. i.e. project-directory/img/
-                dest: 'build/img',
-                ext: '.jpg'
+                dest: 'build'
+            }]
+        },
+        png: {
+            options: {
+                optimizationLevel: 7
+            },
+
+            files: [{
+                expand: true,
+                cwd: 'src/',
+                src: ['**/*.png'],
+                dest: 'build'
             }]
         }
     },
@@ -62,18 +56,21 @@ grunt.initConfig({
         target: {
             files: [{
                 expand: true,
-                cwd: 'src/css',
-                src: ['*.css'],
-                dest: 'build/css',
+                cwd: 'src',
+                src: ['**/*.css'],
+                dest: 'build',
             }]
         }
     },
 
     uglify: {
         my_target: {
-            files: {
-                'build/js/perfmatters.js': ['src/js/perfmatters.js']
-            }
+            files: [{
+                expand: true,
+                cwd: 'src',
+                src: ['**/*.js'],
+                dest: 'build'
+            }]
         }
     }
 });
