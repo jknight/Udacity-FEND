@@ -470,15 +470,16 @@ var resizePizzas = function(size) {
         return dx;
     }
 
-    // Iterates through pizza elements on the page and changes their widths
+    //Time to resize pizzas: 0.7049999999999272ms
     function changePizzaSizes(size) {
 
         var allPizzaContainers = document.querySelectorAll(".randomPizzaContainer");
+        var exemplar = allPizzaContainers[0];
+        var dx = determineDx(exemplar, size);
+        var newwidth = (exemplar.offsetWidth + dx) + 'px';
 
         for (var i = 0; i < allPizzaContainers.length; i++) {
             var container = allPizzaContainers[i];
-            var dx = determineDx(container, size);
-            var newwidth = (container.offsetWidth + dx) + 'px';
             container.style.width = newwidth;
         }
     }
@@ -547,7 +548,6 @@ function createPizzas() {
 var isFirstScroll = true;
 
 function updatePositions() {
-        console.log("updatePositions");
     if (isFirstScroll) {
 
         createPizzas();
@@ -567,10 +567,11 @@ function updatePositions() {
     window.performance.mark("mark_start_frame");
 
     var items = document.querySelectorAll('.mover');
-    var scrollTop = document.body.scrollTop;
+    var scrollTop1250 = document.body.scrollTop / 1250;
     for (var i = 0; i < items.length; i++) {
-        var phase = Math.sin((scrollTop / 1250) + (i % 5));
-        items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
+        var phase = Math.sin((scrollTop1250) + (i % 5));
+        var left = items[i].basicLeft + 100 * phase;
+        items[i].style.left = left + 'px';
     }
 
     // User Timing API to the rescue again. Seriously, it's worth learning.
