@@ -7,12 +7,31 @@ Project #4
 
 - Jeffrey Knight <jeffrey.knight@gmail.com>
 
-About
+README requirement
 ---
+"A README file is included detailing all setps required to 
+successfully run the application and outlines the optimizations that the student
+made in views/js/main.js for pizza.html
 
-The goal of this project was to improve performance for two mini-sites.
-To accomplish this, I focused on a build system. Using grunt, I set up a series
-of build steps to clean and compress the source code.
+All steps required to run the application
+---
+In your favorite browser which surely isn't IE, browse to:
+- http://jknight.github.io/P4/dest/index.html
+- http://jknight.github.io/P4/dest/views/pizza.html
+These are all that is required to run the application.
+
+To review the source code, please see the code in git under 
+- [https://github.com/jknight/jknight.github.io/tree/master/P4](P4 on git)
+
+Please note that the code is in two directories: src/ contains the original code and dest/ is the output
+of the front-end gulp build (minification, etc.)
+
+Optimizations made in views/js/main.js
+---
+1) the 'pizza site' is included in the front-end build pipeline. Please see Gulpfile.js
+2) keep pizzas in an array so we don't have to go back and pull them out of the DOM each time
+3) pulled various repetitive tasks out of loops ("Do it once")
+4) code cleanup in updatePositions code
 
 
 
