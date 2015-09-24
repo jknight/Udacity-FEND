@@ -1,3 +1,8 @@
+/* NOTE: 
+ * ttf's now served up from our web server instead of google (faster?)
+ * already using local() and format() so I don't see any other optimizations available here
+ * */
+
 @font-face {
   font-family: 'Open Sans';
   font-style: normal;
