@@ -33,6 +33,14 @@ Optimizations made in views/js/main.js
 3) pulled various repetitive tasks out of loops ("Do it once")
 4) code cleanup in updatePositions code
 
+Comments in Submission
+---
+I am aiming for "Exceeds Specifications" here. I'd appreciate it if you could fail this submission if it's not "Exceeds" !
 
-
+- All code crunched with Gruntfile.js. I spent some time tweaking my gruntfile so you can selectively disable steps and still get a working output
+- Code separated into src/ and des/ (grunt output) folders
+- All code checked for FPS and speed. 
+- Solicited additional feedback in forums: https://discussions.udacity.com/t/not-clear-on-frames-per-second-rate-is-60-fps-or-higher-requirement/32794/2
+- PageSpeed insights reports speed of 94 on index.html desktop. Unfortunately, it's clocking 87 on mobile but I hope this gets me to Exceeds (https://developers.google.com/speed/pagespeed/insights/?url=http%3A%2F%2Fjknight.github.io%2FP4%2Fdest%2Findex.html%3Fasdfdsa&tab=desktop)
+- Lots of comments and README.md
 
