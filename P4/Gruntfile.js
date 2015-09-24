@@ -140,10 +140,11 @@ grunt.loadNpmTasks('grunt-uncss');
 grunt.loadNpmTasks('grunt-contrib-clean');
 grunt.loadNpmTasks('grunt-processhtml');
 
+//Here is our main grunt build pipeline 
 grunt.registerTask('default',
 	'Main build task', [
 		'clean',
-		'copy:everything', //do this up front. we can overwrite as needed. 
+		'copy:everything', //do this up front. we can overwrite as needed. This lets us selectively disable subsequent steps for QA
 		'uglify:javascript',
 		'imagemin',
 		'uncss',
