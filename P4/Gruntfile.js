@@ -113,6 +113,17 @@ grunt.initConfig({
         }
     },
 
+    inline: {
+        target1: {
+            src: 'dest/index.html',
+            dest: 'dest/index.html'
+        },
+        target2: {
+            src: 'dest/views/pizza.html',
+            dest: 'dest/views/pizza.html'
+        }
+    },
+
     htmlmin: {
         target: {
             options: {
@@ -151,5 +162,6 @@ grunt.registerTask('default',
         'uglify:javascript',
         'cssmin',
         'processhtml',
+        'inline',
         'htmlmin'
     ]);
