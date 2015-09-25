@@ -46,3 +46,10 @@ I am aiming for "Exceeds Specifications" here. I'd appreciate it if you could fa
 - Adding weird voodoo css hacks to get GPU involved in rendering (transform: translateZ(0) /  backface-visibility)
 - Use document.getElementById instead of document.querySelector
 - Use document.getElementsByClassName instead of document.querySelectorAll 
+- Added inline task to Grunt to get above 90 speed threshold (mobile: 93 / 100, desktop: 95 / 100)) 
+- Changed to document.getElementById() wherever possible
+- Set pizzas offscreen visibility to hidden. Does this help? Needs more benchmarking to tell...
+
+TODOs
+---
+- Could improve comments
