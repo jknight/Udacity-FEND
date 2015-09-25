@@ -87,15 +87,16 @@ var resizePizzas = function(size) {
 
     // Changes the value for the size of the pizza above the slider
     function changeSliderLabel(size) {
+      var element = document.getElementById("pizzaSize");
         switch (size) {
             case "1":
-                document.querySelector("#pizzaSize").innerHTML = "Small";
+                element.innerHTML = "Small";
                 return;
             case "2":
-                document.querySelector("#pizzaSize").innerHTML = "Medium";
+                element.innerHTML = "Medium";
                 return;
             case "3":
-                document.querySelector("#pizzaSize").innerHTML = "Large";
+                element.innerHTML = "Large";
                 return;
             default:
                 console.log("bug in changeSliderLabel");
@@ -105,7 +106,7 @@ var resizePizzas = function(size) {
     // Returns the size difference to change a pizza element from one size to another. Called by changePizzaSlices(size).
     function determineDx(elem, size) {
         var oldwidth = elem.offsetWidth;
-        var windowwidth = document.querySelector("#randomPizzas").offsetWidth;
+        var windowwidth = document.getElementById("#randomPizzas").offsetWidth;
         var oldsize = oldwidth / windowwidth;
 
         function sizeSwitcher(size) {
@@ -131,17 +132,17 @@ var resizePizzas = function(size) {
     //Time to resize pizzas: 0.7049999999999272ms
     function changePizzaSizes(size) {
 
-        var allPizzaContainers = document.querySelectorAll(".randomPizzaContainer");
+        var allPizzaContainers = document.getElementsByClassName(".randomPizzaContainer");
 
         //Do the size calculations once
         var sample = allPizzaContainers[0]; //use the first one as a template for sizing 
         var dx = determineDx(sample, size);
-        var newwidth = (sample.offsetWidth + dx) + 'px';
+        var newWidth = (sample.offsetWidth + dx) + 'px';
 
         //Note apply the sizes across the board
-        for (var i = 0; i < allPizzaContainers.length; i++) {
-            var container = allPizzaContainers[i];
-            container.style.width = newwidth;
+        var length = allPizzaContainers.length;
+        for (var i = 0; i < length; i++) {
+            allPizzaContainers[i].style.width = newWidth;
         }
     }
 
@@ -167,8 +168,9 @@ console.log("Time to generate pizzas on load: " + timeToGenerate[0].duration + "
 // Iterator for number of times the pizzas in the background have scrolled.
 // Used by updatePositions() to decide when to log the average time per frame
 var frame = 0;
+
 //NOTE: keep pizzas in array so we don't have to keep asking the dom for them
-var pizzas = [];
+//var pizzas = [];
 
 // Logs the average amount of time per 10 frames needed to move the sliding background pizzas on scroll.
 function logAverageFrame(times) { // times is the array of User Timing measurements from updatePositions()
@@ -184,6 +186,8 @@ function createPizzas() {
 
     //Initial creation and setting of pizza positions
     var pizzasDiv = document.getElementById("randomPizzas");
+
+    //These are the pizza options available
     for (var i = 2; i < 100; i++) {
 
         var pizzaElement = pizzaElementGenerator(i);
@@ -200,50 +204,85 @@ function createPizzas() {
     elemTemplate.src = "img/pizza.png";
     elemTemplate.style.height = "100px";
     elemTemplate.style.width = "73.333px";
-    var movingPizzas = document.querySelector("#movingPizzas1");
+    var movingPizzas = document.getElementById("movingPizzas1");
+    console.log("--", movingPizzas);
+    var elem;
+    var theTop = 0;
+    var i;
 
-    for (var i = 0; i < 200; i++) {
+    var count = 200;
+    //These are the background floating pizzas
+    for (i = 0; i < count; i++) {
 
-        //NOTE: weighing cloning vs creating 
-        var elem = elemTemplate.cloneNode(false);
+        //NOTE: considering options of cloning vs creating 
+        elem = elemTemplate.cloneNode(false);
         elem.basicLeft = (i % cols) * s;
-        elem.style.top = (Math.floor(i / cols) * s) + 'px';
+        theTop = (Math.floor(i / cols) * s);
+        elem.style.top = theTop + 'px';
+
+        elem.style.visibility = 'hidden';
+
+        //if(theTop >  screenHeight )
+        //  break;
 
         movingPizzas.appendChild(elem);
-
-        //track pizzas in array so we don't have to bother the DOM every time we want to tweak them
-        pizzas.push(elem);
     }
+    console.log("Created " + i + " pizzas");
 }
+
+var timer;
 
 function updatePositions() {
 
-    // NOTE: nothing should be repeated in a loop - pulling out repetitive items
-    var scrollTop1250 = document.body.scrollTop / 1250;
-
-    window.performance.mark("mark_start_frame");
-
-    for (var i = 0; i < pizzas.length; i++) //NOTE: using pizzas from our array rather than taxing DOM calls
-    {
-        var phase = Math.sin((scrollTop1250) + (i % 5));
-
-        //TODO: considering ramifications of painting offscreen (keep everything on screen?)
-        //      not yet sure if there's a performance impact
-        var left = pizzas[i].basicLeft + 100 * phase;
-        if (left < 0) left = 0; //NOTE: work in progress: keeping pizzas on screen to help paint performance ?
-        pizzas[i].style.left = left + 'px';
+    if (timer) {
+        window.clearTimeout(timer);
     }
 
-    // User Timing API to the rescue again. Seriously, it's worth learning.
-    // NOTE: seriously, it's super ugly in my code. And what's with all the "mark_end" typed in strings ?
-    // Super easy to create custom metrics.
-    //
-    window.performance.mark("mark_end_frame");
-    window.performance.measure("measure_frame_duration", "mark_start_frame", "mark_end_frame");
-    if (++frame % 10 === 0) {
-        var timesToUpdatePosition = window.performance.getEntriesByName("measure_frame_duration");
-        logAverageFrame(timesToUpdatePosition);
-    }
+    //using a timer to calm down the madness of the onscroll event getting called a million times a second
+    timer = window.setTimeout(function() {
+
+        var scrollTop1250 = document.body.scrollTop / 1250;
+
+        window.performance.mark("mark_start_frame");
+        var pizza;
+        var screenHeight =  window.screen.height;
+        var visibleTop = (document.documentElement.scrollTop||document.body.scrollTop);
+        var visibleBottom = visibleTop + screenHeight;;
+        var pizzas = document.getElementsByClassName("mover");
+        var pizzaTop = 0;
+
+        var length = pizzas.length;
+        var phase = 0;
+        for (var i = 0; i < length; i++) //NOTE: using pizzas from our array rather than taxing DOM calls
+        {
+            pizza = pizzas[i];
+            phase = Math.sin((scrollTop1250) + (i % 10));
+
+            var left = Math.floor(pizza.basicLeft + 100 * phase);
+            //TODO: considering ramifications of painting offscreen (keep everything on screen?)
+            //      not yet sure if there's a performance impact
+            pizza.style.left = left + 'px';
+
+            pizzaTop = parseInt(pizza.style.top);
+            if(pizzaTop >= visibleTop && pizzaTop - 100 <= visibleBottom)
+              pizza.style.visibility = 'visible'; 
+            else 
+              pizza.style.visibility = 'hidden'; 
+
+        }
+
+        // User Timing API to the rescue again. Seriously, it's worth learning.
+        // NOTE: seriously, it's super ugly in my code. And what's with all the "mark_end" typed in strings ?
+        // Super easy to create custom metrics.
+        window.performance.mark("mark_end_frame");
+        window.performance.measure("measure_frame_duration", "mark_start_frame", "mark_end_frame");
+        if (++frame % 10 === 0) {
+            var timesToUpdatePosition = window.performance.getEntriesByName("measure_frame_duration");
+            logAverageFrame(timesToUpdatePosition);
+        }
+    
+    }, 5);
+
 }
 
 document.addEventListener('DOMContentLoaded', function() {

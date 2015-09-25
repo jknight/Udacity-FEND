@@ -43,4 +43,6 @@ I am aiming for "Exceeds Specifications" here. I'd appreciate it if you could fa
 - Solicited additional feedback in forums: https://discussions.udacity.com/t/not-clear-on-frames-per-second-rate-is-60-fps-or-higher-requirement/32794/2
 - PageSpeed insights reports speed of 94 on index.html desktop. Unfortunately, it's clocking 87 on mobile but I hope this gets me to Exceeds (https://developers.google.com/speed/pagespeed/insights/?url=http%3A%2F%2Fjknight.github.io%2FP4%2Fdest%2Findex.html%3Fasdfdsa&tab=desktop)
 - Lots of comments and README.md
-
+- Adding weird voodoo css hacks to get GPU involved in rendering (transform: translateZ(0) /  backface-visibility)
+- Use document.getElementById instead of document.querySelector
+- Use document.getElementsByClassName instead of document.querySelectorAll 
