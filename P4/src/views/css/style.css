@@ -39,7 +39,6 @@ form {
 
 .randomPizzaContainer {
   float: left;
-  display: flex;
   /*It seems incredibly lame you have to hack css to improve performance but that's what the internets say ...*/
    -webkit-backface-visibility: hidden;
   -moz-backface-visibility: hidden;
@@ -51,7 +50,7 @@ form {
   -ms-perspective: 1000;
   perspective: 1000;
 
-  backface-visibility: hidden;/* really, wtf? */
+  backface-visibility: hidden;/* really? */
 }
 
 .randomPizzaContainer:after {

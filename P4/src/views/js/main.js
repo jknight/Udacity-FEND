@@ -5,6 +5,13 @@
 
 //NOTE: all the boring word generation code that I'm sure Udacity reviewers are tired of seeing has been moved to dictionary.js
 
+//-- Globals --
+var lastFloaterTop = 0;
+var currentWidth = "33.3%";;
+// Iterator for number of times the pizzas in the background have scrolled.
+// Used by updateBackgroundFloaterPositions() to decide when to log the average time per frame
+var frame = 0;
+//-- /Globals --
 
 var ingredientItemizer = function(string) {
     return "<li>" + string + "</li>";
@@ -54,7 +61,7 @@ var pizzaElementGenerator = function(i) {
     pizzaDescriptionContainer = document.createElement("div");
 
     pizzaContainer.classList.add("randomPizzaContainer");
-    pizzaContainer.style.width = "33.33%";
+    pizzaContainer.style.width = currentWidth; //"33.33%";
     pizzaContainer.style.height = "325px";
 
     pizzaContainer.id = "pizza" + i; // gives each pizza element a unique id
@@ -106,7 +113,7 @@ var resizePizzas = function(size) {
     // Returns the size difference to change a pizza element from one size to another. Called by changePizzaSlices(size).
     function determineDx(elem, size) {
         var oldwidth = elem.offsetWidth;
-        var windowwidth = document.getElementById("#randomPizzas").offsetWidth;
+        var windowwidth = document.getElementById("randomPizzas").offsetWidth;
         var oldsize = oldwidth / windowwidth;
 
         function sizeSwitcher(size) {
@@ -132,7 +139,7 @@ var resizePizzas = function(size) {
     //Time to resize pizzas: 0.7049999999999272ms
     function changePizzaSizes(size) {
 
-        var allPizzaContainers = document.getElementsByClassName(".randomPizzaContainer");
+        var allPizzaContainers = document.getElementsByClassName("randomPizzaContainer");
 
         //Do the size calculations once
         var sample = allPizzaContainers[0]; //use the first one as a template for sizing 
@@ -143,6 +150,7 @@ var resizePizzas = function(size) {
         var length = allPizzaContainers.length;
         for (var i = 0; i < length; i++) {
             allPizzaContainers[i].style.width = newWidth;
+            currentWidth = newWidth;
         }
     }
 
@@ -165,15 +173,9 @@ window.performance.measure("measure_pizza_generation", "mark_start_generating", 
 var timeToGenerate = window.performance.getEntriesByName("measure_pizza_generation");
 console.log("Time to generate pizzas on load: " + timeToGenerate[0].duration + "ms");
 
-// Iterator for number of times the pizzas in the background have scrolled.
-// Used by updatePositions() to decide when to log the average time per frame
-var frame = 0;
-
-//NOTE: keep pizzas in array so we don't have to keep asking the dom for them
-//var pizzas = [];
 
 // Logs the average amount of time per 10 frames needed to move the sliding background pizzas on scroll.
-function logAverageFrame(times) { // times is the array of User Timing measurements from updatePositions()
+function logAverageFrame(times) { // times is the array of User Timing measurements from updateBackgroundFloaterPositions()
     var numberOfEntries = times.length;
     var sum = 0;
     for (var i = numberOfEntries - 1; i > numberOfEntries - 11; i--) {
@@ -182,57 +184,8 @@ function logAverageFrame(times) { // times is the array of User Timing measureme
     console.log("Average time to generate last 10 frames: " + sum / 10 + "ms");
 }
 
-function createPizzas() {
-
-    //Initial creation and setting of pizza positions
-    var pizzasDiv = document.getElementById("randomPizzas");
-
-    //These are the pizza options available
-    for (var i = 2; i < 100; i++) {
-
-        var pizzaElement = pizzaElementGenerator(i);
-
-        pizzasDiv.appendChild(pizzaElement);
-    }
-
-    var cols = 8;
-    var s = 256;
-
-    //Create the element once and clone it (TODO: hard to tell the perf. boost here)
-    var elemTemplate = document.createElement('img');
-    elemTemplate.className = 'mover';
-    elemTemplate.src = "img/pizza.png";
-    elemTemplate.style.height = "100px";
-    elemTemplate.style.width = "73.333px";
-    var movingPizzas = document.getElementById("movingPizzas1");
-    console.log("--", movingPizzas);
-    var elem;
-    var theTop = 0;
-    var i;
-
-    var count = 200;
-    //These are the background floating pizzas
-    for (i = 0; i < count; i++) {
-
-        //NOTE: considering options of cloning vs creating 
-        elem = elemTemplate.cloneNode(false);
-        elem.basicLeft = (i % cols) * s;
-        theTop = (Math.floor(i / cols) * s);
-        elem.style.top = theTop + 'px';
-
-        elem.style.visibility = 'hidden';
-
-        //if(theTop >  screenHeight )
-        //  break;
-
-        movingPizzas.appendChild(elem);
-    }
-    console.log("Created " + i + " pizzas");
-}
-
 var timer;
-
-function updatePositions() {
+function updateBackgroundFloaterPositions() {
 
     if (timer) {
         window.clearTimeout(timer);
@@ -241,34 +194,19 @@ function updatePositions() {
     //using a timer to calm down the madness of the onscroll event getting called a million times a second
     timer = window.setTimeout(function() {
 
-        var scrollTop1250 = document.body.scrollTop / 1250;
-
         window.performance.mark("mark_start_frame");
-        var pizza;
-        var screenHeight =  window.screen.height;
-        var visibleTop = (document.documentElement.scrollTop||document.body.scrollTop);
-        var visibleBottom = visibleTop + screenHeight;;
-        var pizzas = document.getElementsByClassName("mover");
-        var pizzaTop = 0;
 
+        var scrollTop1250 = document.body.scrollTop / 1250;
+        var pizza, phase, left;
+        var pizzas = document.getElementsByClassName("mover");
         var length = pizzas.length;
-        var phase = 0;
-        for (var i = 0; i < length; i++) //NOTE: using pizzas from our array rather than taxing DOM calls
+
+        for (var i = 0; i < length; i++) 
         {
             pizza = pizzas[i];
             phase = Math.sin((scrollTop1250) + (i % 10));
-
-            var left = Math.floor(pizza.basicLeft + 100 * phase);
-            //TODO: considering ramifications of painting offscreen (keep everything on screen?)
-            //      not yet sure if there's a performance impact
+            left = Math.floor(pizza.basicLeft + 100 * phase);
             pizza.style.left = left + 'px';
-
-            pizzaTop = parseInt(pizza.style.top);
-            if(pizzaTop >= visibleTop && pizzaTop - 100 <= visibleBottom)
-              pizza.style.visibility = 'visible'; 
-            else 
-              pizza.style.visibility = 'hidden'; 
-
         }
 
         // User Timing API to the rescue again. Seriously, it's worth learning.
@@ -281,16 +219,71 @@ function updatePositions() {
             logAverageFrame(timesToUpdatePosition);
         }
     
-    }, 5);
+    }, 10);
 
 }
 
+function createMorePizzas() {
+
+  //this is the master container of all pizzas - we'll add more to this as we go
+    var pizzasDiv = document.getElementById("randomPizzas");
+
+    for (var i = 0; i < 3; i++) {
+
+        var pizzaElement = pizzaElementGenerator(i);
+
+        pizzasDiv.appendChild(pizzaElement);
+    }
+}
+
+function createMoreBackgroundFloaters(initialLoad) {
+    var elemTemplate = document.createElement('img');
+    elemTemplate.className = 'mover';
+    elemTemplate.src = "img/pizza.png";
+    elemTemplate.style.height = "100px";
+    elemTemplate.style.width = "73.333px";
+    var movingPizzas = document.getElementById("movingPizzas1");
+    var elem;
+    var theTop = 0;
+
+    //These are the background floating pizzas
+    var cols = 8;
+    var rowsPerScreen = 3;
+    var numberToCreate = cols * rowsPerScreen;
+    var s = 256;
+    for (var i = 0; i < numberToCreate; i++) {
+        elem = elemTemplate.cloneNode(false);
+        elem.basicLeft = (i % cols) * s;
+        theTop = (Math.floor(i / cols) * s) + lastFloaterTop;
+        elem.style.top = theTop + 'px';
+        movingPizzas.appendChild(elem);
+
+        if(!initialLoad && i % cols == 0) 
+        {
+          console.log("UP IT", i);
+          lastFloaterTop += s;
+        }
+    }
+}
+
+function infinitePizzas() {
+
+  updateBackgroundFloaterPositions();
+
+  if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+    createMorePizzas();
+    createMoreBackgroundFloaters(false);
+  }
+  
+}
+
 document.addEventListener('DOMContentLoaded', function() {
-    // one-shot pizza creating & initial position update on load
-    createPizzas();
-    updatePositions();
+  //initial creation of a set of background floaters. We'll create more as the use scrolls
+    createMoreBackgroundFloaters(true);
+    updateBackgroundFloaterPositions();
 });
 
 //as a user scrolls, move them pizzas around
-window.addEventListener('scroll', updatePositions);
+//window.addEventListener('scroll', updateBackgroundFloaterPositions);
+window.addEventListener('scroll', infinitePizzas);
 

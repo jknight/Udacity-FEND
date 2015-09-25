@@ -2,9 +2,9 @@
 <html>
 <head>  
 
-  <!-- build:css css/pizza.css?__inline=true -->
-  <link rel="stylesheet" href="css/style.css?__inline=true">
-  <link rel="stylesheet" href="css/bootstrap-grid.css?__inline=true">
+  <!-- build:css css/pizza.css -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/bootstrap-grid.css">
     <!-- /build -->
 
 </head>
@@ -105,45 +105,19 @@
             <input id="sizeSlider" type="range" min="1" max="3" value="2" step="1" onchange="resizePizzas(this.value)"></input>
           </div>
         </div>
+
         <div id="randomPizzas" class="row">
-          <div id="pizza0" class="randomPizzaContainer" style="width:33.33%;">
-            <div class="col-md-6">
-              <img src="img/pizza.png" class="img-responsive">
-            </div>
-            <div class="col-md-6">
-              <h4>The Udacity Special</h4>
-              <ul>
-                <li>Turkey</li>
-                <li>Tofu</li>
-                <li>Cauliflower</li>
-                <li>Sun Dried Tomatoes</li>
-                <li>Velveeta Cheese</li>
-                <li>Red Sauce</li>
-                <li>Whole Wheat Crust</li>
-              </ul>
-            </div>
-          </div>
-          <div id="pizza1" class="randomPizzaContainer" style="width:33.33%;">
-            <div class="col-md-6">
-              <img src="img/pizza.png" class="img-responsive">
-            </div>
-            <div class="col-md-6">
-              <h4>The Cameron Special</h4>
-              <ul>
-                <li>Chicken</li>
-                <li>Hot Sauce</li>
-                <li>White Crust</li>
-              </ul>
-            </div>
-          </div>
+          <!-- Populate with pizzas -->
         </div>
       </div>
     </div>
+
     <div id="footer" class="col-md-12">Thanks for visiting! &copy; 2014 Udacity</div>
+
   </div>
 
-  <script type="text/javascript" src="js/dictionary.js?__inline=true"></script>
-  <script type="text/javascript" src="js/main.js?__inline=true"></script>
+  <script type="text/javascript" src="js/dictionary.js"></script>
+  <script type="text/javascript" src="js/main.js"></script>
 
 </body>
 
