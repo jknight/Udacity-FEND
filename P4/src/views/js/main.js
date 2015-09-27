@@ -1,13 +1,12 @@
 /*
- * Note to Udacity Reviewer: 
  * Please see README.md for high level info. Comments on optimizations are inline below
+ * NOTE: all the boring word generation code that I'm sure Udacity reviewers are tired of seeing has been moved to dictionary.js
  * */
-
-//NOTE: all the boring word generation code that I'm sure Udacity reviewers are tired of seeing has been moved to dictionary.js
 
 //-- Globals --
 var lastFloaterTop = 0;
 var currentWidth = "33.3%";;
+var pizzaImageHeight = 100;
 // Iterator for number of times the pizzas in the background have scrolled.
 // Used by updateBackgroundFloaterPositions() to decide when to log the average time per frame
 var frame = 0;
@@ -94,7 +93,7 @@ var resizePizzas = function(size) {
 
     // Changes the value for the size of the pizza above the slider
     function changeSliderLabel(size) {
-      var element = document.getElementById("pizzaSize");
+        var element = document.getElementById("pizzaSize");
         switch (size) {
             case "1":
                 element.innerHTML = "Small";
@@ -150,12 +149,11 @@ var resizePizzas = function(size) {
         var length = allPizzaContainers.length;
         for (var i = 0; i < length; i++) {
             allPizzaContainers[i].style.width = newWidth;
-            currentWidth = newWidth;
         }
     }
 
-    // User Timing API is awesome (NOTE: I'm glad you think so)
-    window.performance.mark("mark_start_resize"); // User Timing API function
+    // User Timing API is awesome (NOTE: I'm glad you think so, seems like pretty ugly code to me)
+    window.performance.mark("mark_start_resize");
 
     changeSliderLabel(size);
     changePizzaSizes(size);
@@ -165,13 +163,6 @@ var resizePizzas = function(size) {
     var timeToResize = window.performance.getEntriesByName("measure_pizza_resize");
     console.log("Time to resize pizzas: " + timeToResize[0].duration + "ms");
 };
-window.performance.mark("mark_start_generating"); // collect timing data
-
-// User Timing API again. These measurements tell you how long it took to generate the initial pizzas
-window.performance.mark("mark_end_generating");
-window.performance.measure("measure_pizza_generation", "mark_start_generating", "mark_end_generating");
-var timeToGenerate = window.performance.getEntriesByName("measure_pizza_generation");
-console.log("Time to generate pizzas on load: " + timeToGenerate[0].duration + "ms");
 
 
 // Logs the average amount of time per 10 frames needed to move the sliding background pizzas on scroll.
@@ -184,48 +175,47 @@ function logAverageFrame(times) { // times is the array of User Timing measureme
     console.log("Average time to generate last 10 frames: " + sum / 10 + "ms");
 }
 
-var timer;
-function updateBackgroundFloaterPositions() {
+var updateBackgroundFloaterPositions = function() {
+    //window.performance.mark("mark_start_frame");
 
-    if (timer) {
-        window.clearTimeout(timer);
-    }
+    var scrollTop1250 = document.body.scrollTop / 1250;
+    var pizza, phase, top, left;
+    var pizzas = document.getElementsByClassName("mover");
+    var length = pizzas.length;
+    var windowHeight = window.innerHeight;
+    var windowWidth  = window.innerWidth;
+    var windowTop = window.scrollY;
+    var windowBottom = windowTop + windowHeight;
 
-    //using a timer to calm down the madness of the onscroll event getting called a million times a second
-    timer = window.setTimeout(function() {
+    for (var i = 0; i < length; i++) {
+        pizza = pizzas[i];
+        //var top = parseInt(pizza.style.top, 10) + pizzaImageHeight;
+        var left = parseInt(pizza.style.left, 10);
 
-        window.performance.mark("mark_start_frame");
+        if (top >= windowTop && top <= windowBottom ) {
+          phase = Math.sin((scrollTop1250) + (i % 10));
+          left = Math.floor(pizza.basicLeft + pizzaImageHeight * phase);
 
-        var scrollTop1250 = document.body.scrollTop / 1250;
-        var pizza, phase, left;
-        var pizzas = document.getElementsByClassName("mover");
-        var length = pizzas.length;
-
-        for (var i = 0; i < length; i++) 
-        {
-            pizza = pizzas[i];
-            phase = Math.sin((scrollTop1250) + (i % 10));
-            left = Math.floor(pizza.basicLeft + 100 * phase);
+          if(left < windowWidth)
             pizza.style.left = left + 'px';
         }
+    }
 
-        // User Timing API to the rescue again. Seriously, it's worth learning.
-        // NOTE: seriously, it's super ugly in my code. And what's with all the "mark_end" typed in strings ?
-        // Super easy to create custom metrics.
-        window.performance.mark("mark_end_frame");
-        window.performance.measure("measure_frame_duration", "mark_start_frame", "mark_end_frame");
-        if (++frame % 10 === 0) {
-            var timesToUpdatePosition = window.performance.getEntriesByName("measure_frame_duration");
-            logAverageFrame(timesToUpdatePosition);
-        }
-    
-    }, 10);
+    // User Timing API to the rescue again. Seriously, it's worth learning.
+    // NOTE: seriously, it's super ugly in my code. And what's with all the "mark_end" typed in strings ?
+    // Super easy to create custom metrics.
+    //window.performance.mark("mark_end_frame");
+    //window.performance.measure("measure_frame_duration", "mark_start_frame", "mark_end_frame");
+    //if (++frame % 10 === 0) {
+    //   var timesToUpdatePosition = window.performance.getEntriesByName("measure_frame_duration");
+    //    logAverageFrame(timesToUpdatePosition);
+    //}
 
 }
 
-function createMorePizzas() {
+var addMenuOptions = function() {
 
-  //this is the master container of all pizzas - we'll add more to this as we go
+    //randomPizzas is the master container of all pizzas - we'll add more to this as we go
     var pizzasDiv = document.getElementById("randomPizzas");
 
     for (var i = 0; i < 3; i++) {
@@ -236,54 +226,54 @@ function createMorePizzas() {
     }
 }
 
-function createMoreBackgroundFloaters(initialLoad) {
-    var elemTemplate = document.createElement('img');
-    elemTemplate.className = 'mover';
-    elemTemplate.src = "img/pizza.png";
-    elemTemplate.style.height = "100px";
-    elemTemplate.style.width = "73.333px";
+var createMoreBackgroundFloaters = function(initialLoad) {
+
     var movingPizzas = document.getElementById("movingPizzas1");
-    var elem;
     var theTop = 0;
 
-    //These are the background floating pizzas
     var cols = 8;
-    var rowsPerScreen = 3;
+    var rowsPerScreen = 5;
     var numberToCreate = cols * rowsPerScreen;
     var s = 256;
     for (var i = 0; i < numberToCreate; i++) {
-        elem = elemTemplate.cloneNode(false);
+        elem = document.createElement('img');
+        elem.className = 'mover';
+        elem.src = "img/pizza.png";
+        elem.style.height = pizzaImageHeight + "px";
+        elem.style.width = "73.333px";
+
         elem.basicLeft = (i % cols) * s;
         theTop = (Math.floor(i / cols) * s) + lastFloaterTop;
         elem.style.top = theTop + 'px';
         movingPizzas.appendChild(elem);
 
-        if(!initialLoad && i % cols == 0) 
-        {
-          console.log("UP IT", i);
-          lastFloaterTop += s;
+        if (!initialLoad && i % cols == 0) {
+            lastFloaterTop += s;
         }
     }
 }
 
-function infinitePizzas() {
+var scrollInfinitePizzas = function() {
 
-  updateBackgroundFloaterPositions();
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+        addMenuOptions();
+        createMoreBackgroundFloaters(false);
+    }
 
-  if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-    createMorePizzas();
-    createMoreBackgroundFloaters(false);
-  }
-  
+    updateBackgroundFloaterPositions();
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  //initial creation of a set of background floaters. We'll create more as the use scrolls
+    window.performance.mark("mark_start_generating"); // collect timing data
+
+    //initial creation of a set of background floaters. We'll create more as the use scrolls
     createMoreBackgroundFloaters(true);
     updateBackgroundFloaterPositions();
+
+    window.performance.mark("mark_end_generating");
+    window.performance.measure("measure_pizza_generation", "mark_start_generating", "mark_end_generating");
+    var timeToGenerate = window.performance.getEntriesByName("measure_pizza_generation");
+    console.log("Time to generate pizzas on load: " + timeToGenerate[0].duration + "ms");
 });
 
-//as a user scrolls, move them pizzas around
-//window.addEventListener('scroll', updateBackgroundFloaterPositions);
-window.addEventListener('scroll', infinitePizzas);
-
+window.addEventListener('scroll', scrollInfinitePizzas);
