@@ -117,10 +117,6 @@ grunt.initConfig({
         target1: {
             src: 'dest/index.html',
             dest: 'dest/index.html'
-        },
-        target2: {
-            src: 'dest/index.html',
-            dest: 'dest/index.html'
         }
     },
 
