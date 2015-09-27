@@ -1,0 +1,119 @@
+<html>
+<head>
+
+    <!-- Grunt: uncss & minify -->
+  <!-- build:css css/pizza.css?__inline=true -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/bootstrap-grid.css">
+  <!-- /build -->
+
+<script src="js/dictionary.js"></script>
+<script src="js/main.js"></script>
+</head>
+
+<body >
+
+  <div class="container">
+    <div id="header" class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-12">
+            <h1>Cam's Jank Free Pizzeria of Infinite Combinations</h1>
+              <div class="row">
+              <div id="menu" class="col-md-12">
+                  <input type="submit" value="Menu">
+                </form>
+                <form action="#ingredients">
+                  <input type="submit" value="Our Ingredients">
+                </form>
+                <form action="#locations">
+                  <input type="submit" value="Locations">
+                </form>
+                <form action="#" onsubmit="alert('Thanks for clicking! This button doesn\'t do anything because this is a fake pizzeria :\)')">
+                  <input type="submit" value="Contact Us">
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="callToAction" class="row">
+      <div class="col-md-4">
+        <img src="img/pizzeria.jpg" class="img-responsive"> <!-- Image credit to: http://commons.wikimedia.org/wiki/File:HK_TST_night_%E5%98%89%E8%98%AD%E9%81%93_Granville_Road_restaurant_Paisano's_Pizzeria_pizza_Dec-2013.JPG -->
+      </div>
+      <div class="col-md-8">
+        <div class="row">
+          <div class="col-md-12">
+            <h1>NOTE TO REVIEWER: This whole thing was rewritten from the ground up. No stale ingredients!<h1>
+            <h2>Serving up <strike>Hundreds</strike> an infinite variety of pizzas at 60+ FPS!</h2>
+            FAQs
+            <br/>
+            - Q: What is a jank? <br/>
+            - A: Jank a completely subjective term made up by hipster google engineers that describes how you feel about your pizza scrolling experience.<br/>
+            - Q: Ok, so how will I feel at Cam's Pizzeria?<br/>
+            - A: You will feel like a million FPS. Pepperoni? Boring. Cheese? No way! Sausage? C'mon, let's get creative.<br/>
+            - Q: How does Jank Free Cam's stack up to the competion??<br/>
+            - A: While our competitiors are sucking at 30FPS we are killing it with every pizza ingredient <strike>imaginable</strike> possible. <br/>
+            - Q: Tell me more<br/>
+            - A: All pizzas served up with a guaranteed 60FPS+. Some of these dope recipes near instant, saving on precious non renawable FPS resources. Don't believe us? Take a look through our menu of <strike>hundreds</strike> <em>infinte</em> pizza options and we know that you'll find something you love.</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-md-push-3">
+            <form action="#randomPizzas">
+              <input type="submit" value="Pick a Pizza Now!" onClick="javascript:document.location='index.html#options' "/>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="ingredients" class="row">
+      <div class="col-md-12">
+        <img src="img/fps.png" class="img-responsive" />
+      </div> 
+      <div class="col-md-8 col-md-push-2">
+        <div class="row">
+          <div class="col-md-12">
+            <h2>Ingredients!</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <p>We've scoured the <strike>planet</strike> universe for the best pizza ingredients. Our crack team of pixel pushers are on constant lookout for new and interesting bits.</p>
+
+            <p>We have classic meats like braised grunt, deep fried css, baked html, and barbecue git. But you can find even more fun meats like coppa, kielbasa and soylent green on our menu too.</p>
+
+            <p>Not interested in meat? No problem! We love our veggies too :) We have everything from markup to markdown .</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="pizzaGenerator" class="row">
+      <div class="col-md-12">
+        <h2>What size pizza would you like? Use the slider below to change pizza sizes.</h2>
+            <hr/>
+            <h3 id="pizzaSize" class="pizzaSize">Small</h3>
+            <div id="pizzaSizeTime">Our team of bit bakers is stanting by for your order..</div>
+            
+            <input id="sizeSlider" type="range" min="1" max="3" value="1" step="1" onchange="resizePizzas(this.value)"></input>
+            <hr/>
+      </div>
+      <a name="options"/>
+      <div class="row">
+        <div class="col-md-12" id="items"></div>
+      </div>
+
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
+
+
+
