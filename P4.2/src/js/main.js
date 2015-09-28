@@ -195,7 +195,7 @@ function createDivs() {
 
     floater.classList.add("floater");
     floater.id = "floater_" + rowCounter + "_" + f; //for debugging purposes, not used
-    floater.style.left = windowWidth + 'px'; 
+    floater.style.left = windowWidth + 'px';
     floater.style.top = '60px';
     var velocity = f + 1 * 4; //gives each floater an initial velocity
     floater.velocity = velocity;
