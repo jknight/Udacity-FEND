@@ -1,0 +1,18 @@
+<html>
+  <head>
+    <script type="text/javascript">
+    var clicks = 0;
+    function increment()
+    {
+      ++clicks;
+      document.getElementById("clickCount").innerHTML = clicks;
+    }
+    </script>
+  <body>
+    <h1>Cat Clicker v1</h1>
+    Clicked: <span id="clickCount"></span>
+    <br/>
+
+    <img src="img/cat.jpg" onClick="javascript:increment();"/>
+  </body>
+</html>
