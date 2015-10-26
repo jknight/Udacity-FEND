@@ -1,0 +1,62 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="css/style.css" media="screen" />
+    <script type="text/javascript">
+
+    var numberOfCats = 5;
+    var cats = [];
+
+    var cat = function(name, src) 
+    {
+      this.name = name;
+      this.src = src;
+      this.clicks = 0;
+    };
+
+    function init() 
+    {
+      var ul = document.getElementById("ul");
+      for(var i = 0; i < numberOfCats; i++)
+      {
+        var newCat = new cat("Kitty_" + i, "img/cat" + i + ".jpg");
+        cats.push(newCat);
+
+        var li = document.createElement("li");
+        li.innerHTML = newCat.name;
+        li.addEventListener('click', function(obj) {
+              return function() { changeCat(obj); }
+        }(newCat));
+
+        ul.appendChild(li);
+      }
+
+      var defaultCat = cats[0];
+      defaultCat.clicks = -1; //start up hack
+      changeCat(defaultCat);
+    }
+
+    function changeCat(obj)
+    {
+      ++obj.clicks;
+      document.getElementById("catImage").src = obj.src;
+      document.getElementById("catName").innerHTML = obj.name;
+      document.getElementById("catClicks").innerHTML = obj.clicks;
+    }
+
+    </script>
+  <body onload="init();" >
+    <h1>Cat Clicker v2</h1>
+
+    <div class="container">
+      <div class="leftBar">
+        <ul id="ul"></ul>
+      </div>
+      <div class="catDiv">
+        Cat Name:<span id="catName"></span>
+        | Cat Clicks: <span id="catClicks"></span>
+        <br/>
+        <img id="catImage" class="catImage" src="#"/>
+     </div>
+
+     </body>
+</html>

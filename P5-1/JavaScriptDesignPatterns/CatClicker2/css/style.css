@@ -1,0 +1,13 @@
+.container { 
+  width:100%;
+}
+
+.catDiv { 
+  float:left;
+  width:40%;
+  border:1px solid black;
+}
+
+.catImage {
+  height: 300px;
+}
