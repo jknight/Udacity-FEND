@@ -1,3 +1,28 @@
+var AdminView = {
+  init: function() {},
+
+  render: function() {},
+
+  save: function() 
+  {
+    console.log("SAVE");
+    Controller.currentCat.name = document.getElementById("name").value;
+    Controller.currentCat.img = document.getElementById("img").value;
+    Controller.currentCat.clickCount= document.getElementById("clickCount").value;
+    CatView.render();
+    CatListView.render();
+  },
+
+  toggleVisibility: function(visible) 
+  {
+    console.log(Controller.currentCat);
+    document.getElementById("name").value = Controller.currentCat.name; 
+    document.getElementById("img").value = Controller.currentCat.img;
+    document.getElementById("clickCount").value = Controller.currentCat.clickCount;  
+    document.getElementById("admin").style.display =  visible ? "block" : "none";
+  }
+};
+
 //View for the cat list. This should contain html
 //and references to the Controller but NO references to the Model
 var CatListView = {
@@ -9,6 +34,7 @@ var CatListView = {
     render: function() {
         var cats = Controller.getCats();
         var ul = document.getElementById("catList");
+        ul.innerHTML = "";
         for (var i = 0; i < cats.length; i++) {
             var cat = cats[i];
             var li = document.createElement("li");
@@ -36,9 +62,9 @@ var CatView = {
     },
 
     render: function() {
-        var cat = Controller.getCat();
+        var cat = Controller.currentCat;
         document.getElementById("catName").innerHTML = cat.name;
         document.getElementById("catClicks").innerHTML = cat.clickCount;
-        document.getElementById("catPicture").src = "img/" + cat.img;
+        document.getElementById("catPicture").src = cat.img;
     }
 };

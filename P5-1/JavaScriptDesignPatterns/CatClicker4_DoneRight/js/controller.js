@@ -2,21 +2,18 @@
 
 var Controller = {
 
-    currentCat: Model.cats[0],
+    currentCat: null,
 
     init: function() {
         Model.init();
         CatListView.init();
         CatView.init();
+        this.currentCat = Model.cats[0];
     },
 
     getCats: function() {
         //return array of cats from Model
         return Model.cats;
-    },
-
-    getCat: function() {
-        return this.currentCat;
     },
 
     setCat: function(cat) {
