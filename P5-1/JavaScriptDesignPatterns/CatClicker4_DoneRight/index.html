@@ -1,0 +1,36 @@
+<html>
+<head>
+  <script src="js/model.js"></script>
+  <script src="js/view.js"></script>
+  <script src="js/controller.js"></script>
+
+  <style>
+  #catList {
+    float:left;
+    height: 100px;
+    width: 200px;
+  }
+
+  #cat {
+    float:left;
+    border: 2px solid blue;
+    height: 300px;
+    width: 300px;
+  }
+
+  </style>
+</head>
+
+<body onLoad="Controller.init();">
+
+  <h1>Cat Clicker Premium</h1>
+  <ul id="catList"></ul>
+  <div id="cat">
+  Name: <span id="catName"></span>
+  Clicks: <span id="catClicks"></span>
+  <img id="catPicture"/>
+  </div>
+
+</body>
+
+</html>

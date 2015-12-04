@@ -4,18 +4,20 @@
 
 This project is a full screen map that has the following functionality:
 1. A search bar
-2. A list view
-3. The map
-
-Presumably it's supposed to use Knockout since the directions say "Download the Knockout framework."
+1. A list view
+1. The map
 
 Other requirements:
 1. use google maps API
-2. display map markers in a neighborhood
-3. separate concerns (mvc)
-4. when clicking on map marker, integrate 3rd party API (yelp, wikipedia, etc.)
-5. mobile friendly
+1. ensure it still works if there's a network issue
+1. use knockout ("Code is properly separated based upon Knockout's best practices.")
+1. display map markers in a neighborhood
+1. map markers animate when selected
+1. separate concerns (mvc. actually: mvvc w/ knockout)
+1. map markers integrate 3rd party API (yelp, wikipedia, etc.)
+1. mobile friendly
+1. responsive (bootstrap)
 
+## How to run it
 
-
-
+Browse to http:.......
