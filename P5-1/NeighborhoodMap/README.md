@@ -21,3 +21,7 @@ Other requirements:
 ## How to run it
 
 Browse to http:.......
+
+## Notes
+
+Knockout.js uses MVVM pattern

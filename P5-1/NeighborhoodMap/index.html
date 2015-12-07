@@ -1,0 +1,59 @@
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+        <title>Jeffrey Knight:: Udacity P5-1: Neighborhood map</title>
+
+        <link href="node_modules//bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+
+        <!--  
+          "Knockout must be used handle list, filter, and any other information on the page 
+          that is subject to changing state. Things that should not be handled by knockout: 
+          anything the map api is used for, tracking markers, making the map, refreshing the map."
+        -->
+        <script src="node_modules/knockout/build/output/knockout-latest.debug.js"></script>
+        <script src="js/knockout-projections.min.js"></script>
+        <script src="node_modules/jquery/dist/jquery.min.js"></script>
+        <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+        <!-- reusing code from P2 -->
+        <!--script src="js/maps.googleaps.js"></script-->
+        <script src="js/mapHelper.js"></script>         
+        <script src="js/ViewModel.js"></script>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNDpdCafl4TYR1lntICBysJBTpx47D0bk&callback=initMapCallback&libraries=places"></script>
+        <script type="text/javascript">
+        function initMapCallback()
+        {
+        //$(function() { 
+          viewModel.init();
+        //});
+        }
+        </script>
+
+
+        </head>
+
+        <body>
+
+        <div id="main">
+	
+	        <div id="left">
+	        Filter:
+	        <input data-bind="value: filter, valueUpdate: 'afterkeydown'" />
+	        <br/>
+            <h4>Top Attractions in Candor, NY</h4>
+	        <ul data-bind="foreach: filteredLocations">
+	          <li><a href="#" data-bind="text:name, click:$root.highlightLocation "></a></li>
+	        </ul>
+	        </div>
+        </div>
+      
+       <div id="map"></div>
+       </div>
+ 
+         </body>
+</html>
