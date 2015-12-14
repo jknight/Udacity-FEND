@@ -8,6 +8,7 @@ var Controller = {
         Model.init();
         CatListView.init();
         CatView.init();
+        AdminView.init();
         this.currentCat = Model.cats[0];
     },
 

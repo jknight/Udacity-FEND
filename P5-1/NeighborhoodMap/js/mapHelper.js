@@ -1,95 +1,75 @@
-function Map() {}
+var Map = {
+    iconClickCounter: 0,
+    callbackCound: 0,
 
-Map.prototype.build = function(locations) {
+    init: function(koObservableLocations) {
 
-  var iconClickCounter = 0;
+        this.map = new google.maps.Map(document.getElementById("map"), {});
 
-  var mapOptions = {
-    disableDefaultUI: true,
+        this.mapBounds = new google.maps.LatLngBounds();
 
-  };
+        this.createPins(koObservableLocations);
+        
+        this.map.fitBounds(this.mapBounds);
 
-  var map = new google.maps.Map(document.querySelector("#map"), mapOptions);
-  console.log("MAP", map);
+        window.addEventListener('resize', function(e) {
+            console.log("Resize");
+            this.map.fitBounds(this.mapBounds);
+        });
 
-  window.mapBounds = new google.maps.LatLngBounds();
+    },
 
-  pinPoster(locations);
+    //given an array of locations, fire off Google place searches for each location
+    createPins: function(koObservableLocations) {
 
-  window.addEventListener('resize', function(e) {
-    map.fitBounds(mapBounds);
-  });
+        var service = new google.maps.places.PlacesService(this.map);
 
-  function createMapMarker(placeData) {
+        for (var i = 0; i < koObservableLocations().length; i++) {
+            var loc = koObservableLocations()[i];
 
-    // save location data from the search result object to local variables
-    var lat = placeData.geometry.location.lat();
-    var lon = placeData.geometry.location.lng();
-    var name = placeData.formatted_address;
-    var bounds = window.mapBounds;
+            var request = {
+                query: loc.address
+            };
 
-    // additional data about the pin for a single location
-    var marker = new google.maps.Marker({
-      map: map,
-      position: placeData.geometry.location,
-      title: name
-    });
+            // Searches the Google Maps API for location data and runs the callback
+            // function with the search results after each search.
+            var boundCallback = (function(results, status) {
 
-    var infowindow = new google.maps.InfoWindow({
-      content: '<h2>Namaste</h2><img class="mapImage" src="???">'
-    });
-    google.maps.event.addListener(marker, 'click', function() {
-      infowindow.open(map, marker);
-    });
+                if (status == google.maps.places.PlacesServiceStatus.OK) {
+                    this.createMapMarker(results[0]);
+                }
+            }.bind(this));
+            service.textSearch(request, boundCallback);
+        }
+    },
 
-    // given a location object, add pin to the map.
-    bounds.extend(new google.maps.LatLng(lat, lon));
+    createMapMarker: function(placeData, status) {
 
-    // fit the map to the new marker
-    map.fitBounds(bounds);
+        var name = placeData.formatted_address;
 
-    map.setCenter(bounds.getCenter());
-  }
+        var marker = new google.maps.Marker({
+            map: this.map,
+            position: placeData.geometry.location,
+            title: placeData.name
+        });
 
-  function callback(results, status) {
-    if (status == google.maps.places.PlacesServiceStatus.OK) {
+        var infowindow = new google.maps.InfoWindow({
+            content: '<h2>Namaste</h2><img class="mapImage" src="???">'
+        });
 
-      //pull images from our array of images and use them for the map popups.
-      //they're actually not related to the locations but ... oh well they look nice.
-      //var image = images[iconClickCounter];
-      //iconClickCounter = iconClickCounter == images.length - 1 ? 0 : ++iconClickCounter;
+        google.maps.event.addListener(marker, 'click', function() {
+            infowindow.open(this.map, marker);
+        });
 
-      createMapMarker(results[0]);
+        var lat = placeData.geometry.location.lat;
+        var lon = placeData.geometry.location.lon;
+        this.mapBounds.extend(new google.maps.LatLng(lat, lon));
+
+    },
+
+    updatePinsVisibility: function() {
+        console.log("OK");
     }
-  }
 
-  //given an array of locations, fire off Google place searches for each location
-  function pinPoster(locations) {
-
-    console.log
-    var service = new google.maps.places.PlacesService(map);
-
-    //for (var place in locations) {
-    for(var i = 0; i < locations.length; i++) {
-      var place = locations[i];
-
-      var request = {
-        query: place.address
-      };
-
-      // Searches the Google Maps API for location data and runs the callback
-      // function with the search results after each search.
-      service.textSearch(request, callback);
-    }
-  }
 
 };
-
-/*
-// Vanilla JS way to listen for resizing of the window
-// and adjust map bounds
-window.addEventListener('resize', function(e) {
-  //Make sure the map bounds get updated on page resize
-  map.fitBounds(mapBounds);
-  });
-*/

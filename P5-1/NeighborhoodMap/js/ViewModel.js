@@ -27,34 +27,37 @@ var viewModel = {
     }],
 
     filteredLocations: ko.observableArray([]),
-    map: null,
+    //map: "hello",
 
     //main entry point
     init: function() {
-      this.map = new Map().build(this.filteredLocations);
+        //first, put our list of locations into an observable array ...
+        this.filteredLocations(this._locations);
+        Map.init(this.filteredLocations);
 
-      this.filteredLocations(this._locations);
+        //then pass that into the map so the map can observe changes as well
+        //this.map = new Map().build(this.filteredLocations);
+        console.log(Map);
 
-      this.filter.subscribe(function(newValue) {
-        console.log(this);
+        this.filter.subscribe(function(newValue) {
 
-        //first filter the location list
-        this.filteredLocations(this._locations.filter(function(f) { 
-          console.log("FILTER", this.filter()); 
-          return f.name.indexOf(this.filter()) != -1  }, this));
+            //first filter the location list
+            this.filteredLocations(this._locations.filter(function(f) {
+                return f.name.indexOf(this.filter()) != -1
+            }, this));
 
-        //then filter the map location points
+            //then filter the map location points
+            Map.updatePinsVisibility();
 
-      }, this);
+        }, this);
 
-
-      ko.applyBindings(viewModel);
+        ko.applyBindings(viewModel);
     }
 
 };
 
 viewModel.highlightLocation = function(loc) {
-  console.log("Hightlight", loc);
+    console.log("Hightlight", loc);
 };
 
 /*

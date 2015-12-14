@@ -43,6 +43,7 @@ function init() {
 
     //in mapHelper.js:
     new Map().build(locations, images);
+
   });
 }
 

@@ -1,7 +1,25 @@
 var AdminView = {
-  init: function() {},
 
-  render: function() {},
+  init: function() 
+  {
+    var that = this;
+
+    document.getElementById("saveButton").addEventListener('click', this.save.bind(this));
+
+    document.getElementById("cancelButton").addEventListener('click', function(obj) {
+      return function() { that.toggleVisibility(false); } 
+    }(that));
+
+  },
+
+  render: function() 
+  {
+    document.getElementById("name").value = Controller.currentCat.name; 
+    document.getElementById("img").value = Controller.currentCat.img;
+    document.getElementById("clickCount").value = Controller.currentCat.clickCount;  
+    document.getElementById("admin").style.display =  visible ? "block" : "none";
+
+  },
 
   save: function() 
   {
@@ -9,6 +27,7 @@ var AdminView = {
     Controller.currentCat.name = document.getElementById("name").value;
     Controller.currentCat.img = document.getElementById("img").value;
     Controller.currentCat.clickCount= document.getElementById("clickCount").value;
+    this.toggleVisibility(false);
     CatView.render();
     CatListView.render();
   },
@@ -16,11 +35,7 @@ var AdminView = {
   toggleVisibility: function(visible) 
   {
     console.log(Controller.currentCat);
-    document.getElementById("name").value = Controller.currentCat.name; 
-    document.getElementById("img").value = Controller.currentCat.img;
-    document.getElementById("clickCount").value = Controller.currentCat.clickCount;  
-    document.getElementById("admin").style.display =  visible ? "block" : "none";
-  }
+    }
 };
 
 //View for the cat list. This should contain html

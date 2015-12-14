@@ -11,7 +11,7 @@
         <link href="css/style.css" rel="stylesheet">
 
         <!--  
-          "Knockout must be used handle list, filter, and any other information on the page 
+          Requirement: "Knockout must be used handle list, filter, and any other information on the page 
           that is subject to changing state. Things that should not be handled by knockout: 
           anything the map api is used for, tracking markers, making the map, refreshing the map."
         -->
@@ -25,12 +25,11 @@
         <script src="js/mapHelper.js"></script>         
         <script src="js/ViewModel.js"></script>
         <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNDpdCafl4TYR1lntICBysJBTpx47D0bk&callback=initMapCallback&libraries=places"></script>
+
         <script type="text/javascript">
         function initMapCallback()
         {
-        //$(function() { 
           viewModel.init();
-        //});
         }
         </script>
 
