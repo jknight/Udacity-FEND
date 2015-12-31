@@ -54,6 +54,11 @@ var viewModel = {
 
         }, this);
 
+        window.addEventListener('resize', (function(e) {
+            this.map.fitBounds(this.mapBounds);
+            this.map.setCenter(this.mapBounds.getCenter());
+        }).bind(this));
+
         ko.applyBindings(this);
     },
 
