@@ -91,7 +91,7 @@ var viewModel = {
             else if (location.name.indexOf(filter) != -1)
                 name = location.name.replace(filter, "<b>" + filter + "</b>");
 
-            if (name != null) { // this location matches the filter, or there is no filter
+            if (name !== null) { // this location matches the filter, or there is no filter
 
                 locations.append("<li><a id=\"l" + i + "\" href=\"#\">" + name + "</a></li>");
                 $("#l" + i).on("click", this._locationClicked.bind(this, i));
@@ -179,7 +179,7 @@ var viewModel = {
 
         //NOTE: we're hitting the 3rd party API as little as needed: only on demand per item and only
         //      once: box up the results and serve them leftovers the next time
-        if (flickrHtml != null) { //PULL FROM CACHE !
+        if (flickrHtml !== null) { //PULL FROM CACHE !
             console.log("Pulling flicker html from cache for " + name + " **  not making another trip **");
             locationDetails.innerHTML = flickrHtml;
         } else { //Make a trip out to the internets. Do this only once !
