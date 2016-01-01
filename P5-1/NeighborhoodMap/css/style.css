@@ -1,7 +1,11 @@
 html, body { height: 100%; margin: 0; padding: 0; }
 
 #main { width:100%;}
-#left { float:left; width: 250px; padding:5px;}
+#left { float:left; width: 200px; padding:5px;}
 #map { height: 100%; border:5px solid green;}
+#locations { padding: 6px; margin: 6px;}
+#locationDetails { height: 200px; width: 200px;}
+
+.locationDetailsImage { width:200px; }
 
 

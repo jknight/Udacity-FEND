@@ -1,21 +1,35 @@
 var flickr = {
 
-    //given a searh term and the infoWindow to populate with results, search flickr and populate the popup
-    fetch: function(searchWord, infoWindow) {
+    // given a search term and the infoWindow to populate with results, search flickr, build 
+    // an html snippit of the results, and pass it to the callback
+    fetch: function(searchWord, address, div, callback) {
 
         $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?", {
-                tags: searchWord,
-                tagmode: "any",
-                format: "json"
-            },
-            function(data) {
-                if (data.items.length == 0) {
-                    //TODO: for production, something more graceful here ...
-                    console.log("No search results ...");
-                }
-                var firstItem = data.items[0];
-                var html = "<h2>" + searchWord + "</h2><img src='" + firstItem.media.m + "'><br/>" + firstItem.title + "<br/>Author:" + firstItem.author;
-                infoWindow.setContent(html);
-            });
+                    tags: searchWord,
+                    tagmode: "any",
+                    format: "json"
+                },
+                function(data) {
+
+                    var html;
+                    if (data.items.length == 0) {
+                        html = "<b>No image found :(</b><br/>" + address;
+                    } else {
+
+                        var firstItem = data.items[0];
+                        var html = "<h5>" + searchWord + "</h5><img class='locationDetailsImage' src='" +
+                            firstItem.media.m + "'><br/>" +
+                            firstItem.title + "<br/>Author:" +
+                            firstItem.author + "<br/>Address:" +
+                            address;
+                    }
+                    return callback(html);
+                })
+            .done(function() { /* placeholder */ })
+            .fail(function() {
+                return callback("Please check your network connection");
+            })
+            .always(function() { /* placeholder */ });
+
     }
 }

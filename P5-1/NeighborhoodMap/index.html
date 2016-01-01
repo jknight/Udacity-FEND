@@ -38,20 +38,18 @@
         <div id="main">
 	
 	        <div id="left">
-            <h5>Top Attractions in Candor, NY</h5>
-	        Filter:
-	        <input data-bind="value: filter, valueUpdate: 'afterkeydown'" />
-	        <br/>
-	        <ul data-bind="foreach: filteredLocations">
-	          <li><a href="#" data-bind="text:name, click:$root.highlightLocation "></a></li>
-	        </ul>
-            <small>click an item to highlight on map</small>
-            <br/>
-            <small>click a marker for more information</small>
-	        </div>
-        </div>
+	            <h4>Candor, NY</h4>
+                Top Attractions!
+                <br/>
+		        <input data-bind="value: filter, valueUpdate: 'afterkeydown'" />
+		        <br/>
+
+                <ul id="locations"></ul> 
+
+                <div id="locationDetails"></div>
+            </div>
       
-       <div id="map"></div>
+           <div id="map"></div>
        </div>
  
          </body>
