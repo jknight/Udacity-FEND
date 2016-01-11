@@ -10,14 +10,12 @@ var flickr = {
                     format: "json"
                 },
                 function(data) {
-
                     var html;
                     if (data.items.length == 0) {
                         html = "<b>No image found :(</b><br/>" + address;
                     } else {
-
                         var firstItem = data.items[0];
-                        var html = "<h5>" + searchWord + "</h5><img class='locationDetailsImage' src='" +
+                        html = "<h5>" + searchWord + "</h5><img class='locationDetailsImage' src='" +
                             firstItem.media.m + "'><br/>" +
                             firstItem.title + "<br/>Author:" +
                             firstItem.author + "<br/>Address:" +
@@ -30,6 +28,5 @@ var flickr = {
                 return callback("Please check your network connection");
             })
             .always(function() { /* placeholder */ });
-
     }
-}
+};

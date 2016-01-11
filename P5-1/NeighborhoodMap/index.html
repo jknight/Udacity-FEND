@@ -31,12 +31,11 @@
         }
         </script>
 
-        </head>
+   </head>
 
-        <body>
+   <body>
 
         <div id="main">
-	
 	        <div id="left">
 	            <h4>Candor, NY</h4>
                 Top Attractions!
@@ -44,13 +43,15 @@
 		        <input data-bind="value: filter, valueUpdate: 'afterkeydown'" />
 		        <br/>
 
-                <ul id="locations"></ul> 
-
-                <div id="locationDetails"></div>
+                <ul data-bind="foreach: locations">
+                  <li><a href="#" data-bind="text:name, click:$root.locationClicked"></a></li>
+                </ul>
             </div>
-      
-           <div id="map"></div>
+           <div id="right">
+             <div id="resize"><a href=#">=</a></div>
+             <div id="map"></div>
+           </div>
        </div>
  
-         </body>
+    </body>
 </html>

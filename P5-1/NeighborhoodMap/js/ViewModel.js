@@ -28,11 +28,13 @@ var viewModel = {
 
     // public member variables (view will access these)
     filter: ko.observable(""),
+    locations: ko.observableArray(),
 
     // private member variables 
     _map: null,
     _mapBounds: null,
     _callbackCount: 0,
+
 
     // Main entry point
     // public
@@ -42,7 +44,6 @@ var viewModel = {
         this._map = new google.maps.Map(document.getElementById("map"), {});
         this._mapBounds = new google.maps.LatLngBounds();
 
-        this._drawLocations();
         this._buildLocationPlaces();
 
         //Udacity Requirement: implement a filter on the list view
@@ -55,28 +56,13 @@ var viewModel = {
             this._map.fitBounds(this._mapBounds);
             this._map.setCenter(this._mapBounds.getCenter());
         }).bind(this));
-
-        ko.applyBindings(this);
     },
 
-    // Add list items & markers that match the filter (or add all if there is no filter)
-    // NOTE: I spent a lot of time trying to use an observable array that would track the visibility
-    //       of items and update accordingly, as well as binding to a filtered array. It worked well 
-    //       in the simple case of the list items tracking the filter box, but it started to break down 
-    //       and get ugly once the markers and list items sharing visibility and click events.
-    //       In the end, a koObservableArray became awkward and forced and felt like I was hacking 
-    //       knockout to do something it didn't do well for this use case. For the sake of simplicity, 
-    //       I swapped out my koObservableArray to instead building the UL list as the user filters. 
-    //       I understand how binding with MVVM works with knockout, but for the way this code is 
-    //       structured, it's a square peg in a round hole.
     // private
     _drawLocations: function(filter) {
 
-        var locations = $("#locations");
-        locations.empty(); //this will also drop any event handlers in child nodes (click events)
-
-        //POSSIBLE REFACTOR: while it's nice to loop just once, the logic is confusing
-        //          since it's both building lists & sorting out marker visibility
+        // clear out the observable array and re-populate it with just the items that match the filter
+        this.locations([]);
 
         for (var i = 0; i < this._locations.length; i++) {
 
@@ -89,12 +75,12 @@ var viewModel = {
             if (typeof(filter) == "undefined")
                 name = location.name;
             else if (location.name.indexOf(filter) != -1)
-                name = location.name.replace(filter, "<b>" + filter + "</b>");
+                name = location.name; //.replace(filter, "<b>" + filter + "</b>");
 
             if (name !== null) { // this location matches the filter, or there is no filter
 
-                locations.append("<li><a id=\"l" + i + "\" href=\"#\">" + name + "</a></li>");
-                $("#l" + i).on("click", this._locationClicked.bind(this, i));
+                //$("#l" + i).on("click", this._locationClicked.bind(this, i));
+                this.locations.push(location);
 
                 if (typeof(location.marker) != "undefined")
                     location.marker.setMap(this._map);
@@ -155,8 +141,15 @@ var viewModel = {
             // order of callbacks since they're async
             this._map.fitBounds(this._mapBounds);
             this._map.setCenter(this._mapBounds.getCenter());
+
+            this.locations(this._locations);
+            ko.applyBindings(this);
         }
 
+    },
+
+    locationClicked: function(x) {
+        console.log("CLICKED", x);
     },
 
     // Udacity Requirement: Add additional functionality to animate a map marker when either 
@@ -179,7 +172,7 @@ var viewModel = {
 
         //NOTE: we're hitting the 3rd party API as little as needed: only on demand per item and only
         //      once: box up the results and serve them leftovers the next time
-        if (flickrHtml !== null) { //PULL FROM CACHE !
+        if (flickrHtml) { //PULL FROM CACHE !
             console.log("Pulling flicker html from cache for " + name + " **  not making another trip **");
             locationDetails.innerHTML = flickrHtml;
         } else { //Make a trip out to the internets. Do this only once !
