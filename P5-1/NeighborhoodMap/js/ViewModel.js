@@ -29,12 +29,13 @@ var viewModel = {
     // public member variables (view will access these)
     filter: ko.observable(""),
     locations: ko.observableArray(),
+    sideBarVisible: ko.observable(false),
 
     // private member variables 
     _map: null,
     _mapBounds: null,
     _callbackCount: 0,
-
+    _infoWindow: null,
 
     // Main entry point
     // public
@@ -43,6 +44,9 @@ var viewModel = {
         //Udacity Requirement: call the google map API only once
         this._map = new google.maps.Map(document.getElementById("map"), {});
         this._mapBounds = new google.maps.LatLngBounds();
+
+        //generic info window that we'll repurpose for all markers
+        this._infoWindow = new google.maps.InfoWindow();
 
         this._buildLocationPlaces();
 
@@ -57,6 +61,15 @@ var viewModel = {
             this._map.setCenter(this._mapBounds.getCenter());
         }).bind(this));
     },
+
+    // public method - called via knockout binding
+    locationClicked: function(index) {
+      this._locationClicked(index);
+    },
+
+    toggleSideBar: function() {
+      this.sideBarVisible(!this.sideBarVisible());
+    }, 
 
     // private
     _drawLocations: function(filter) {
@@ -127,6 +140,7 @@ var viewModel = {
 
             this._mapBounds.extend(placeData.geometry.location);
 
+            this._locations[i].id = i;
             this._locations[i].marker = marker;
         }
 
@@ -148,40 +162,43 @@ var viewModel = {
 
     },
 
-    locationClicked: function(x) {
-        console.log("CLICKED", x);
-    },
-
     // Udacity Requirement: Add additional functionality to animate a map marker when either 
     //                     the list item associated with it or the map marker itself is selected.
     // Note that this function is used for both marker and list item selection
     _locationClicked: function(i) {
 
+        this.sideBarVisible(false);
+
         var marker = this._locations[i].marker;
 
-        // smoothly move the map so the selected item is in the middle
-        this._map.panTo(marker.getPosition());
-
-        //bounce the marker around a little
+        // bounce the marker around a little
         this._animateMarker(marker);
 
         var flickrHtml = this._locations[i].flickrHtml;
         var name = this._locations[i].name;
         var address = this._locations[i].address;
-        var locationDetails = document.getElementById("locationDetails");
 
         //NOTE: we're hitting the 3rd party API as little as needed: only on demand per item and only
         //      once: box up the results and serve them leftovers the next time
         if (flickrHtml) { //PULL FROM CACHE !
             console.log("Pulling flicker html from cache for " + name + " **  not making another trip **");
-            locationDetails.innerHTML = flickrHtml;
+            this._infoWindow.setContent(flickrHtml);
+            this._infoWindow.open(this._map, marker);
         } else { //Make a trip out to the internets. Do this only once !
-            locationDetails.innerHTML = "<h1>Loading ...</h1>";
-            flickr.fetch(name, address, locationDetails, (function(i, html) {
-                locationDetails.innerHTML = html;
+            this._infoWindow.setContent("<h1>Loading ...</h1>");
+            flickr.fetch(name, address, (function(i, html) {
+                this._infoWindow.setContent(html);
+                //cache the result
                 this._locations[i].flickrHtml = html;
             }).bind(this, i));
         }
+
+        // smoothly move the map so the selected item is in the middle
+        this._map.panTo(marker.getPosition());
+        // and then move down a little to give the info window some space
+        this._map.panBy(0, -200);
+
+        this._infoWindow.open(this._map, marker);
     },
 
     _animateMarker: function(marker) {

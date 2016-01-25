@@ -2,7 +2,7 @@ var flickr = {
 
     // given a search term and the infoWindow to populate with results, search flickr, build 
     // an html snippit of the results, and pass it to the callback
-    fetch: function(searchWord, address, div, callback) {
+    fetch: function(searchWord, address, callback) {
 
         $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?", {
                     tags: searchWord,

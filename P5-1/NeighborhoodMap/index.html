@@ -36,7 +36,7 @@
    <body>
 
         <div id="main">
-	        <div id="left">
+          <div id="left" data-bind="visible: sideBarVisible">
 	            <h4>Candor, NY</h4>
                 Top Attractions!
                 <br/>
@@ -44,11 +44,19 @@
 		        <br/>
 
                 <ul data-bind="foreach: locations">
-                  <li><a href="#" data-bind="text:name, click:$root.locationClicked"></a></li>
+                  <li><a href="#" data-bind="text:name, click: (function() { $parent.locationClicked($index()); }).bind($root)"></a></li>
                 </ul>
+            
             </div>
+
+                <div class="small" data-bind="click: toggleSideBar, visible: sideBarVisible()">
+                  <h3>&lt;</h3>
+                </div>
+            <div class="small" data-bind="click: toggleSideBar, visible: !sideBarVisible()">
+              <h3>&gt;</h3>
+            </div>
+              
            <div id="right">
-             <div id="resize"><a href=#">=</a></div>
              <div id="map"></div>
            </div>
        </div>

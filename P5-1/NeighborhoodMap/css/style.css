@@ -1,12 +1,10 @@
 html, body { height: 100%; margin: 0; padding: 0; }
 
 #main { width:100%;}
-#left { float:left; width: 200px; padding:5px;}
-#right { height: 100%; border: 5px solid green; width: 100%;}
+#left { float:left; width: 150px; padding:5px; height:100%}
+#right { height: 100%; }
 #map { height: 100%; }
 #locations { padding: 6px; margin: 6px;}
-#locationDetails { height: 200px; width: 200px;}
+ul { padding: 5px; list-style-type: none;}
 
-.locationDetailsImage { width:200px; }
-
-
+.small { float:left; width: 20px; background:gray; height:100%}
