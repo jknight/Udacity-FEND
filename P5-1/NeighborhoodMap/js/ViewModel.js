@@ -22,7 +22,7 @@ var viewModel = {
         name: "Elementary School",
         address: "2 Academy St, Candor, NY 13743",
     }, {
-        name: "Turkey Trot Acres Hunting Lodge",
+        name: "Hunting Lodge",
         address: "188 Tubbs Hill Rd, Candor, NY 13743",
     }],
 
