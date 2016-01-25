@@ -37,20 +37,22 @@ var viewModel = {
     _callbackCount: 0,
     _infoWindow: null,
 
+    // ** Public methods ** 
+
     // Main entry point
-    // public
+    // public - called by google maps api callback
     init: function() {
 
-        //Udacity Requirement: call the google map API only once
+        // Udacity Requirement: call the google map API only once
         this._map = new google.maps.Map(document.getElementById("map"), {});
         this._mapBounds = new google.maps.LatLngBounds();
 
-        //generic info window that we'll repurpose for all markers
+        // generic info window that we'll recycle for all markers
         this._infoWindow = new google.maps.InfoWindow();
 
         this._buildLocationPlaces();
 
-        //Udacity Requirement: implement a filter on the list view
+        // Udacity Requirement: implement a filter on the list view
         this.filter.subscribe(function() {
             var filter = this.filter();
             this._drawLocations(filter);
@@ -62,14 +64,17 @@ var viewModel = {
         }).bind(this));
     },
 
-    // public method - called via knockout binding
+    // public - called via knockout binding
     locationClicked: function(index) {
       this._locationClicked(index);
     },
 
+    // public - called via knockout binding
     toggleSideBar: function() {
       this.sideBarVisible(!this.sideBarVisible());
     }, 
+
+    // ** Private methods **
 
     // private
     _drawLocations: function(filter) {
@@ -101,7 +106,7 @@ var viewModel = {
         }
     },
 
-    // Given this._locations, use google's PlaceService API to turn addresses into locations. 
+    // Given the set of locations (this._locations), use google's PlaceService API to turn addresses into locations. 
     // private
     _buildLocationPlaces: function() {
 
@@ -144,12 +149,13 @@ var viewModel = {
             this._locations[i].marker = marker;
         }
 
-        // Track our callbacks from marker creations and center / fit the map on the last one
+        // Track our callbacks from marker creations and center / fit the map on the last one. This way we 
+        // size the map just once when all the callbacks are in
         ++this._callbackCount;
-        //if (this._callbackCount == this._locations.length) {
+
         if (this._callbackCount == this._locations.length) {
 
-            // this is the last one to call back: now that we have all the pins,
+            // this is the last one to call back: now that we have all the pins resolved,
             // size & center the map. If we did this for each callback, or didn't do 
             // it last, then this would be a mess. Note that we can't rely on the 
             // order of callbacks since they're async
@@ -165,6 +171,7 @@ var viewModel = {
     // Udacity Requirement: Add additional functionality to animate a map marker when either 
     //                     the list item associated with it or the map marker itself is selected.
     // Note that this function is used for both marker and list item selection
+    // private
     _locationClicked: function(i) {
 
         this.sideBarVisible(false);
@@ -179,7 +186,7 @@ var viewModel = {
         var address = this._locations[i].address;
 
         //NOTE: we're hitting the 3rd party API as little as needed: only on demand per item and only
-        //      once: box up the results and serve them leftovers the next time
+        //      once: box up the results and serve our user heated up leftovers the next time around
         if (flickrHtml) { //PULL FROM CACHE !
             console.log("Pulling flicker html from cache for " + name + " **  not making another trip **");
             this._infoWindow.setContent(flickrHtml);
@@ -195,12 +202,13 @@ var viewModel = {
 
         // smoothly move the map so the selected item is in the middle
         this._map.panTo(marker.getPosition());
-        // and then move down a little to give the info window some space
+        // ... and then move down a wee little bit to give the info window some space
         this._map.panBy(0, -200);
 
         this._infoWindow.open(this._map, marker);
     },
 
+    // private
     _animateMarker: function(marker) {
 
         window.setTimeout(function() { //kick to background thread to smooth out the display

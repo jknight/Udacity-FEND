@@ -14,6 +14,7 @@ This project renders a full screen map that has the following functionality:
 - Enter text in text box to filter
 - Click on list view results
 - Click on markers 
+- Click on the gray vertical area to show & hide the list of locations
 
 ## Notes
 

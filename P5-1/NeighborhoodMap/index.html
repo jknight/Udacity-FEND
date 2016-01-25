@@ -22,14 +22,8 @@
         <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="js/ViewModel.js"></script>
 
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNDpdCafl4TYR1lntICBysJBTpx47D0bk&callback=initMapCallback&libraries=places"></script>
-
-        <script type="text/javascript">
-        function initMapCallback()
-        {
-          viewModel.init();
-        }
-        </script>
+        <!-- once the google maps API loads, have it call back to our viewModel's entry point, viewModel.init -->
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNDpdCafl4TYR1lntICBysJBTpx47D0bk&callback=viewModel.init&libraries=places"></script>
 
    </head>
 
