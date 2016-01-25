@@ -1,3 +1,7 @@
+/* This class is responsible for fetching content from Flickr and building a little Html snippit
+   of the results
+ */
+
 var flickr = {
 
     // given a search term and the infoWindow to populate with results, search flickr, build 
@@ -17,9 +21,7 @@ var flickr = {
                         var firstItem = data.items[0];
                         html = "<h5>" + searchWord + "</h5><img class='locationDetailsImage' src='" +
                             firstItem.media.m + "'><br/>" +
-                            firstItem.title + "<br/>Author:" +
-                            firstItem.author + "<br/>Address:" +
-                            address;
+                            firstItem.title + "<br/>Author:" firstItem.author; 
                     }
                     return callback(html);
                 })
