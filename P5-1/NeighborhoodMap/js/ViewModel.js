@@ -192,7 +192,7 @@ var viewModel = {
             this._infoWindow.setContent(flickrHtml);
             this._infoWindow.open(this._map, marker);
         } else { //Make a trip out to the internets. Do this only once !
-            this._infoWindow.setContent("<h1>Loading ...</h1>");
+            this._infoWindow.setContent("<h1>space monkeys fetching bytes ...</h1>");
             flickr.fetch(name, address, (function(i, html) {
                 this._infoWindow.setContent(html);
                 //cache the result
