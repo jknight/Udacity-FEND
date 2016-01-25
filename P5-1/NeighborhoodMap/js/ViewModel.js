@@ -188,7 +188,7 @@ var viewModel = {
         //NOTE: we're hitting the 3rd party API as little as needed: only on demand per item and only
         //      once: box up the results and serve our user heated up leftovers the next time around
         if (flickrHtml) { //PULL FROM CACHE !
-            console.log("Pulling flicker html from cache for " + name + " **  not making another trip **");
+            //console.log("Pulling flicker html from cache for " + name + " **  not making another trip **");
             this._infoWindow.setContent(flickrHtml);
             this._infoWindow.open(this._map, marker);
         } else { //Make a trip out to the internets. Do this only once !
