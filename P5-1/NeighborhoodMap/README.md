@@ -10,12 +10,10 @@ This project renders a full screen map that has the following functionality:
 
 ## How to run it
 
-- Browse to http://jknight.github.io/P5-1/NeighborhoodMap/
-- Enter text in text box to filter
-- Click on list view results
-- Click on markers 
-- Click on the gray vertical area to show & hide the list of locations
+- Unzip the .zip file 
+- Double click on index.html
+- Click on map markers
+- Click on the vertical gray bar to show/hide list of locations
 
 ## Notes
-
 Knockout.js uses MVVM pattern

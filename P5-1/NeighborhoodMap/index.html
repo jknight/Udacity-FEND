@@ -1,59 +1,65 @@
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- "The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags" -->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- "The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags" -->
 
-        <title>Jeffrey Knight:: Udacity P5-1: Neighborhood map</title>
+    <title>Jeffrey Knight:: Udacity P5-1: Neighborhood map</title>
 
-        <link href="node_modules//bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link href="css/style.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+  </head>
 
-        <!--  
-          Requirement: "Knockout must be used handle list, filter, and any other information on the page 
-          that is subject to changing state. Things that should not be handled by knockout: 
-          anything the map api is used for, tracking markers, making the map, refreshing the map."
-        -->
-        <script src="node_modules/knockout/build/output/knockout-latest.debug.js"></script>
-        <script src="js/flickr.js"></script>
-        <script src="js/knockout-projections.min.js"></script>
-        <script src="node_modules/jquery/dist/jquery.min.js"></script>
-        <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-        <script src="js/ViewModel.js"></script>
+  <body>
 
-        <!-- once the google maps API loads, have it call back to our viewModel's entry point, viewModel.init -->
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNDpdCafl4TYR1lntICBysJBTpx47D0bk&callback=viewModel.init&libraries=places"></script>
+    <div id="main">
+      <div id="left" data-bind="visible: sideBarVisible">
+        <h4>Candor, NY</h4>
+        Top Attractions!
+        <br/>
+        <input data-bind="value: filter, valueUpdate: 'afterkeydown'" />
+        <br/>
 
-   </head>
+        <ul data-bind="foreach: locations">
+          <li><a href="#" data-bind="text:name, click: (function() { $parent.locationSelected(id); }).bind($root)"></a></li>
+        </ul>
 
-   <body>
+      </div>
 
-        <div id="main">
-          <div id="left" data-bind="visible: sideBarVisible">
-	            <h4>Candor, NY</h4>
-                Top Attractions!
-                <br/>
-		        <input data-bind="value: filter, valueUpdate: 'afterkeydown'" />
-		        <br/>
+      <div class="small" data-bind="click: toggleSideBar, visible: sideBarVisible()">
+        <h3>&lt;</h3>
+      </div>
+      <div class="small" data-bind="click: toggleSideBar, visible: !sideBarVisible()">
+        <h3>&gt;</h3>
+      </div>
 
-                <ul data-bind="foreach: locations">
-                  <li><a href="#" data-bind="text:name, click: (function() { $parent.locationClicked($index()); }).bind($root)"></a></li>
-                </ul>
-            
-            </div>
+      <div id="right">
+        <div id="map"></div>
+      </div>
+    </div>
 
-                <div class="small" data-bind="click: toggleSideBar, visible: sideBarVisible()">
-                  <h3>&lt;</h3>
-                </div>
-            <div class="small" data-bind="click: toggleSideBar, visible: !sideBarVisible()">
-              <h3>&gt;</h3>
-            </div>
-              
-           <div id="right">
-             <div id="map"></div>
-           </div>
-       </div>
- 
-    </body>
+    <!--
+      Requirement: "Knockout must be used handle list, filter, and any other information on the page
+      that is subject to changing state. Things that should not be handled by knockout:
+      anything the map api is used for, tracking markers, making the map, refreshing the map."
+    -->
+    <script src="js/knockout-latest.debug.js"></script>
+    <script src="js/flickr.js"></script>
+    <script src="js/knockout-projections.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/ViewModel.js"></script>
+
+    <!-- once the google maps API loads, have it call back to our viewModel's entry point, viewModel.init -->
+    <script async defer onError="connectionError()"
+                        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNDpdCafl4TYR1lntICBysJBTpx47D0bk&callback=viewModel.init&libraries=places"></script>
+
+    <script type="text/javascript">
+    function connectionError() {
+      $("#main").html("<h2>Unable to Connect</h2>Please check your connection");
+    }
+    </script>
+
+  </body>
 </html>

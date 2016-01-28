@@ -25,10 +25,8 @@ var flickr = {
                     }
                     return callback(html);
                 })
-            .done(function() { /* placeholder */ })
             .fail(function() {
                 return callback("Please check your network connection");
-            })
-            .always(function() { /* placeholder */ });
+            });
     }
 };

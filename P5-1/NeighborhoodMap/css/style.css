@@ -1,10 +1,43 @@
-html, body { height: 100%; margin: 0; padding: 0; }
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
 
-#main { width:100%;}
-#left { float:left; width: 150px; padding:5px; height:100%}
-#right { height: 100%; }
-#map { height: 100%; }
-#locations { padding: 6px; margin: 6px;}
-ul { padding: 5px; list-style-type: none;}
+ul {
+  padding: 5px;
+  list-style-type: none;
+}
 
-.small { float:left; width: 20px; background:gray; height:100%}
+#main {
+  width: 100%;
+}
+
+#left {
+  float: left;
+  width: 150px;
+  padding:5px;
+  height:100%;
+}
+
+#right {
+  height: 100%;
+}
+
+#map {
+  height: 100%;
+}
+
+#locations {
+  padding: 6px;
+  margin: 6px;
+}
+
+.small {
+  float: left;
+  width: 20px;
+  background: #a9a9a9;
+  height: 100%
+}
+
